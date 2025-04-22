@@ -48,5 +48,5 @@ valgrind: fclean
 push: fclean
 	@(find . -type f -name "#.#" -delete -o -name "*~" -delete)
 	@(git add .)
-	@(git commit -m "[ADD] op.h / op.c added with coding style")
-	@(git push -f)
+	@(git commit -m "[REMOVE] -f removed")
+	@(git push)
