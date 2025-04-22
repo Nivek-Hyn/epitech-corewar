@@ -18,6 +18,7 @@
 #include <sys/stat.h>
 #include "define.h"
 #include "struct.h"
+#include "op.h"
 
 #ifndef MY_H_
     #define MY_H_

@@ -35,8 +35,8 @@ re: fclean all clean
 
 coding_style: clean
 	cd ../coding-style-checker/ \
-	&& ./coding-style.sh ../B-CPE-200-MAR-2-1-amazed-nathan.muzay/ \
-	&& cd ../B-CPE-200-MAR-2-1-amazed-nathan.muzay/ \
+	&& ./coding-style.sh ../B-CPE-200-MAR-2-1-corewar-kevin.huynh/ \
+	&& cd ../B-CPE-200-MAR-2-1-corewar-kevin.huynh/ \
 	&& make \
 	&& clear \
 	&& cd ../coding-style-checker/ \
@@ -48,5 +48,5 @@ valgrind: fclean
 push: fclean
 	@(find . -type f -name "#.#" -delete -o -name "*~" -delete)
 	@(git add .)
-	@(git commit -m "[ADD] Lib added, include, *.h, main return 84")
+	@(git commit -m "[ADD] op.h / op.c added with coding style")
 	@(git push)
