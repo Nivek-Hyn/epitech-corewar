@@ -49,4 +49,4 @@ push: fclean
 	@(find . -type f -name "#.#" -delete -o -name "*~" -delete)
 	@(git add .)
 	@(git commit -m "[ADD] op.h / op.c added with coding style")
-	@(git push)
+	@(git push -f)
