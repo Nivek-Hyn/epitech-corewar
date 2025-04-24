@@ -1,6 +1,8 @@
 {
     "files.associations": {
-        "time.h": "c"
+        "time.h": "c",
+        "project.h": "c",
+        "my.h": "c"
     },
     "github.copilot.enable": {
         "*": false,

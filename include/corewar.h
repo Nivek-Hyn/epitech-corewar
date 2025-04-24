@@ -16,6 +16,7 @@
 #include <SFML/Audio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#include <stdint.h>
 #include "define.h"
 #include "struct.h"
 #include "op.h"
@@ -24,28 +25,23 @@
     #define MY_H_
 
 //Project
-
+int read_file(char **argv);
 
 //lib
 bool handle_start_command(char **args, int *start, int i);
 bool handle_end_command(char **args, int *end, int i);
-char *my_strtok(char *str, const char *delim);
 char *my_strchr(const char *s, int c);
 char *my_int_to_str(int num);
 int strlen_lign(char *buff);
 int nb_lign(char *str);
 int add(void *data, char **args);
 int my_getnbr_n(char *const str, int n);
-int my_getnbr(char *const str);
 char *nb_to_str(int i);
 char *concat_params(int argc, char **argv);
 int my_is_prime(int nb);
-int is_digit(const char *str);
 int my_isalpha(char c);
 int len_float(int f);
-char *my_strcat(char *dest, char *str);
 int my_strcmp(char const *s1, char const *s2);
-char *my_strdup(char const *src);
 char *my_strlowcase(char *str);
 char *my_strncat(char *dest, char const *src, int nb);
 int my_strncmp(char const *s1, char const *s2, int n);
@@ -53,24 +49,18 @@ char *my_strncpy(char *dest, char const *src, int n);
 char *my_strstr(char *str, char const *to_find);
 void clean_argument(char *arg);
 char **copy_char_double(char **env);
-char **parsing(char *buffer);
 char **str_to_array(char *buff);
 char **my_str_to_word_array(char *str);
 char **my_str_to_word_array_delim(char *str, char delim);
 int nb_char(char *str);
 int nb_mot(char *str);
 char *my_strupcase(char *str);
-void my_swap(void *a, void *b);
 int my_show_word_array(char *const *tab);
 //my_printf
 void my_printf(char const *format, ...);
-int my_putchar(char);
-int my_putstr(char const *);
-int my_putnbr(int);
 char *my_revstr(char *);
 char *my_strcpy(char *, char const *);
 int get_precision(const char *str, int *index);
-int my_strlen(char const *);
 int nb_len(int);
 int my_putnbr_hexamaj(unsigned int nb);
 int my_putnbr_hexamin(unsigned long int nb);

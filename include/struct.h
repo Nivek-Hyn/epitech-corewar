@@ -8,6 +8,9 @@
 #ifndef STRUCT_H
     #define STRUCT_H
 
-
+typedef struct champion_s {
+    char *name;
+    char *comment;
+} champion_t;
 
 #endif // STRUCT_H //
