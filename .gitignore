@@ -1,3 +1,6 @@
 *.o
 *.a
 corewar
+*.gcno
+*.gcda
+unit_tests
