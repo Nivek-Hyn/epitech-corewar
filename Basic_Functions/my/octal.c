@@ -4,7 +4,7 @@
 ** File description:
 ** octal
 */
-#include "../../include/corewar.h"
+#include "my.h"
 
 
 

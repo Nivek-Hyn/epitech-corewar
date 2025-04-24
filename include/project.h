@@ -10,10 +10,7 @@
 #ifndef PROJECT
     #define PROJECT
 
-typedef struct resources {
-    void *data;
-} resources_t;
-
 // Basic Project Functions:
+int read_file(char **argv, resources_t *resources);
 
 #endif

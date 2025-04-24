@@ -5,7 +5,7 @@
 ** trnasf int en str
 */
 
-#include "../../include/corewar.h"
+#include "my.h"
 
 char *my_int_to_str(int num)
 {

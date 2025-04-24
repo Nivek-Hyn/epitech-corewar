@@ -5,7 +5,7 @@
 ** error gestion for A-maze-ed
 */
 
-#include "../include/corewar.h"
+#include "my.h"
 
 char *my_strchr(const char *s, int c)
 {

@@ -4,7 +4,7 @@
 ** File description:
 ** hexa
 */
-#include "../../include/corewar.h"
+#include "my.h"
 
 int len_float(int f)
 {

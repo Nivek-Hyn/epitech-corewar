@@ -5,7 +5,7 @@
 ** str to int
 */
 
-#include "../../include/corewar.h"
+#include "my.h"
 
 int my_str_to_int(char *str)
 {

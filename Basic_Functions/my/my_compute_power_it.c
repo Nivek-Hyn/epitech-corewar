@@ -4,7 +4,7 @@
 ** File description:
 ** day 5, task 3
 */
-#include "../../include/corewar.h"
+#include "my.h"
 
 int my_compute_power_it(int nb, int p)
 {

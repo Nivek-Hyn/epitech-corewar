@@ -4,7 +4,7 @@
 ** File description:
 ** number char on a lign
 */
-#include "../../include/corewar.h"
+#include "my.h"
 
 int strlen_lign(char *buff)
 {

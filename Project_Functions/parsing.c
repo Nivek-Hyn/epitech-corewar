@@ -5,8 +5,7 @@
 ** parsing
 */
 
-#include "../include/project.h"
-#include "../include/corewar.h"
+#include "project.h"
 
 uint32_t convert_big_endian_to_little_endian(uint32_t Big_Endian)
 {
@@ -19,7 +18,7 @@ uint32_t convert_big_endian_to_little_endian(uint32_t Big_Endian)
     return Little_Endian;
 }
 
-int read_file(char **argv)
+int read_file(char **argv, resources_t *resources)
 {
     FILE *file = fopen(argv[1], "rb");
     int magic_number = 0;
@@ -29,17 +28,13 @@ int read_file(char **argv)
         return 84;
     }
     magic_number = convert_big_endian_to_little_endian(magic_number);
-    if (magic_number == COREWAR_EXEC_MAGIC) {
-        mega_write(1, "Valid magic number!\n");
-    } else {
-        mega_write(1, "Invalid magic number!\n");
-    }
+    if (magic_number != COREWAR_EXEC_MAGIC)
+        return 84;
     char *prog_name = malloc(sizeof(char) * PROG_NAME_LENGTH);
     if (fread(prog_name, sizeof(char), PROG_NAME_LENGTH, file) != PROG_NAME_LENGTH) {
         fclose(file);
         return 84;
     }
-    mega_write(1, "prog_name: %s\n", prog_name);
     fseek(file, 4, SEEK_CUR);
     int prog_size = 0;
     if (fread(&prog_size, sizeof(int), 1, file) != 1) {
@@ -47,13 +42,11 @@ int read_file(char **argv)
         return 84;
     }
     prog_size = convert_big_endian_to_little_endian(prog_size);
-    mega_write(1, "prog_size: %d\n", prog_size);
     char *comment = malloc(sizeof(char) * COMMENT_LENGTH);
     if (fread(comment, sizeof(char), COMMENT_LENGTH, file) != COMMENT_LENGTH) {
         fclose(file);
         return 84;
     }
-    mega_write(1, "comment: %s\n", comment);
     fclose(file);
     return 0;
 }

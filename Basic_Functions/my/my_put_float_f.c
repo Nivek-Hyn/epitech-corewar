@@ -7,7 +7,7 @@
 
 
 
-#include "../../include/corewar.h"
+#include "my.h"
 
 static int my_power(int precision)
 {

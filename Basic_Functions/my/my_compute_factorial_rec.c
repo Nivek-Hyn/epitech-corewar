@@ -4,7 +4,7 @@
 ** File description:
 ** day 5, task 2
 */
-#include "../../include/corewar.h"
+#include "my.h"
 
 int my_compute_factorial_rec(int nb)
 {

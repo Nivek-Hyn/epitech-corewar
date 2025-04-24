@@ -5,8 +5,7 @@
 ** project
 */
 
-#include "include/project.h"
-#include "../include/corewar.h"
+#include "project.h"
 
 void print_info(void)
 {
@@ -38,6 +37,11 @@ int check_args(int argc, char **argv)
     return 0;
 }
 
+void free_all(resources_t *resources)
+{
+    free(resources);
+}
+
 int main(int argc, char **argv)
 {
     resources_t *resources = malloc(sizeof(resources_t));
@@ -45,12 +49,14 @@ int main(int argc, char **argv)
 
     if (!resources)
         return 84;
-    free(resources);
     if (checked_args == 1) {
        return 84;
     } else if (checked_args == 2)
         return 0;
-    if (read_file(argv) == 84)
+    if (read_file(argv, resources) == 84) {
+        free_all(resources);
         return 84;
+    }
+    free_all(resources);
     return 0;
 }

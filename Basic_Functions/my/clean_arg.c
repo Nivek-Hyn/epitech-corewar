@@ -5,7 +5,7 @@
 ** clean_arg
 */
 
-#include "../../include/corewar.h"
+#include "my.h"
 
 void clean_argument(char *arg)
 {

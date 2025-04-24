@@ -5,7 +5,7 @@
 ** copy_char
 */
 
-#include "../../include/corewar.h"
+#include "my.h"
 
 char **copy_char_double(char **env)
 {

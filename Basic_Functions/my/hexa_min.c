@@ -7,7 +7,7 @@
 
 
 
-#include "../../include/corewar.h"
+#include "my.h"
 
 int my_putnbr_hexamin(unsigned long int nb)
 {

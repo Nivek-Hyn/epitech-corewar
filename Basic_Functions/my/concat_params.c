@@ -4,7 +4,7 @@
 ** File description:
 ** Day 8, task 2
 */
-#include "../../include/corewar.h"
+#include "my.h"
 
 
 
