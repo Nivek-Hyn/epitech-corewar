@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2025
 ** project.c
 ** File description:
-** project
+** project, Hatim me doit 1 rolls
 */
 
 #include "project.h"
@@ -37,9 +37,14 @@ int check_args(int argc, char **argv)
     return 0;
 }
 
-void free_all(resources_t *resources)
+int corewar(resources_t *resources, int argc, char **argv)
 {
-    free(resources);
+    for (int i = 1; i < argc; i++) {
+        printf("caca tout mou\n");
+        if (parse_command_arg(resources, argc, argv, i) == -1)
+            return -1;
+    }
+    return 0;
 }
 
 int main(int argc, char **argv)
@@ -47,13 +52,15 @@ int main(int argc, char **argv)
     resources_t *resources = malloc(sizeof(resources_t));
     int checked_args = check_args(argc, argv);
 
-    if (!resources)
+    if (check_malloc(resources, "resources: Malloc Failed.\n") == -1)
         return 84;
     if (checked_args == 1) {
        return 84;
-    } else if (checked_args == 2)
+    } else if (checked_args == 2) {
         return 0;
-    if (read_file(argv, resources) == 84) {
+    }
+    initialize_resources(resources);
+    if (corewar(resources, argc, argv) == -1) {
         free_all(resources);
         return 84;
     }

@@ -18,35 +18,50 @@ uint32_t convert_big_endian_to_little_endian(uint32_t Big_Endian)
     return Little_Endian;
 }
 
-int read_file(char **argv, resources_t *resources)
+int check_validity(champion_t *champion, char **argv)
 {
-    FILE *file = fopen(argv[1], "rb");
-    int magic_number = 0;
-
-    if (fread(&magic_number, sizeof(int), 1, file) != 1) {
-        fclose(file);
-        return 84;
-    }
-    magic_number = convert_big_endian_to_little_endian(magic_number);
-    if (magic_number != COREWAR_EXEC_MAGIC)
-        return 84;
-    char *prog_name = malloc(sizeof(char) * PROG_NAME_LENGTH);
-    if (fread(prog_name, sizeof(char), PROG_NAME_LENGTH, file) != PROG_NAME_LENGTH) {
-        fclose(file);
-        return 84;
-    }
-    fseek(file, 4, SEEK_CUR);
-    int prog_size = 0;
-    if (fread(&prog_size, sizeof(int), 1, file) != 1) {
-        fclose(file);
-        return 84;
-    }
-    prog_size = convert_big_endian_to_little_endian(prog_size);
-    char *comment = malloc(sizeof(char) * COMMENT_LENGTH);
-    if (fread(comment, sizeof(char), COMMENT_LENGTH, file) != COMMENT_LENGTH) {
-        fclose(file);
-        return 84;
-    }
-    fclose(file);
-    return 0;
+    printf("caca tout check validity\n");
+    if (!(my_strstr(champion->name, ".cor")))
+        return -1;
+    printf("caca jsp\n");
 }
+
+int read_file(champion_t *champion, char **argv)
+{
+    printf("caca tout read_file\n");
+    if (check_validity(champion, argv) == -1)
+        return -1;
+}
+
+// int read_file(resources_t *resources, char **argv)
+// {
+//     FILE *file = fopen(argv[1], "rb");
+//     int magic_number = 0;
+
+//     if (fread(&magic_number, sizeof(int), 1, file) != 1) {
+//         fclose(file);
+//         return -1;
+//     }
+//     magic_number = convert_big_endian_to_little_endian(magic_number);
+//     if (magic_number != COREWAR_EXEC_MAGIC)
+//         return -1;
+//     char *prog_name = malloc(sizeof(char) * PROG_NAME_LENGTH);
+//     if (fread(prog_name, sizeof(char), PROG_NAME_LENGTH, file) != PROG_NAME_LENGTH) {
+//         fclose(file);
+//         return -1;
+//     }
+//     fseek(file, 4, SEEK_CUR);
+//     int prog_size = 0;
+//     if (fread(&prog_size, sizeof(int), 1, file) != 1) {
+//         fclose(file);
+//         return -1;
+//     }
+//     prog_size = convert_big_endian_to_little_endian(prog_size);
+//     char *comment = malloc(sizeof(char) * COMMENT_LENGTH);
+//     if (fread(comment, sizeof(char), COMMENT_LENGTH, file) != COMMENT_LENGTH) {
+//         fclose(file);
+//         return -1;
+//     }
+//     fclose(file);
+//     return 0;
+// }

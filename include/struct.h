@@ -8,22 +8,26 @@
 #ifndef STRUCT_H
     #define STRUCT_H
 
-typedef struct instruction_s {
-    uint8_t opcode;
-    uint8_t coding_byte;
-    char **parameters;
-    struct instruction_s *next;
-} instruction_t;
+typedef struct flags {
+    int dump;
+    int n;
+    int a;
+} flags_t;
 
 typedef struct champion_s {
+    int prog_number;
+    int load_address;
     char *name;
     char *comment;
     int prog_size;
-    instruction_t *instructions;
+    char *code;
 } champion_t;
 
 typedef struct resources_s {
-    champion_t **champon_list;
+    champion_t **champion_list;
+    int nb_champion;
+    flags_t *flags;
+    int nbr_cycle;
 } resources_t;
 
 #endif // STRUCT_H //

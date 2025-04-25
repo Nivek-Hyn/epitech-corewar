@@ -2,7 +2,8 @@
     "files.associations": {
         "time.h": "c",
         "project.h": "c",
-        "my.h": "c"
+        "my.h": "c",
+        "sstream": "c"
     },
     "github.copilot.enable": {
         "*": false,
