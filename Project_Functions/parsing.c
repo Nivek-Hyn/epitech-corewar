@@ -20,17 +20,17 @@ uint32_t convert_big_endian_to_little_endian(uint32_t Big_Endian)
 
 int check_validity(champion_t *champion, char **argv)
 {
-    printf("caca tout check validity\n");
+    if (!champion || !champion->name)
+        return -1;
     if (!(my_strstr(champion->name, ".cor")))
         return -1;
-    printf("caca jsp\n");
 }
 
 int read_file(champion_t *champion, char **argv)
 {
-    printf("caca tout read_file\n");
     if (check_validity(champion, argv) == -1)
         return -1;
+    return 0;
 }
 
 // int read_file(resources_t *resources, char **argv)
@@ -46,7 +46,8 @@ int read_file(champion_t *champion, char **argv)
 //     if (magic_number != COREWAR_EXEC_MAGIC)
 //         return -1;
 //     char *prog_name = malloc(sizeof(char) * PROG_NAME_LENGTH);
-//     if (fread(prog_name, sizeof(char), PROG_NAME_LENGTH, file) != PROG_NAME_LENGTH) {
+//     if (fread(prog_name, sizeof(char),
+//          PROG_NAME_LENGTH, file) != PROG_NAME_LENGTH) {
 //         fclose(file);
 //         return -1;
 //     }
@@ -58,7 +59,8 @@ int read_file(champion_t *champion, char **argv)
 //     }
 //     prog_size = convert_big_endian_to_little_endian(prog_size);
 //     char *comment = malloc(sizeof(char) * COMMENT_LENGTH);
-//     if (fread(comment, sizeof(char), COMMENT_LENGTH, file) != COMMENT_LENGTH) {
+//     if (fread(comment, sizeof(char),
+//        COMMENT_LENGTH, file) != COMMENT_LENGTH) {
 //         fclose(file);
 //         return -1;
 //     }

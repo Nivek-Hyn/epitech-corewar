@@ -40,7 +40,6 @@ int check_args(int argc, char **argv)
 int corewar(resources_t *resources, int argc, char **argv)
 {
     for (int i = 1; i < argc; i++) {
-        printf("caca tout mou\n");
         if (parse_command_arg(resources, argc, argv, i) == -1)
             return -1;
     }
@@ -55,7 +54,7 @@ int main(int argc, char **argv)
     if (check_malloc(resources, "resources: Malloc Failed.\n") == -1)
         return 84;
     if (checked_args == 1) {
-       return 84;
+        return 84;
     } else if (checked_args == 2) {
         return 0;
     }

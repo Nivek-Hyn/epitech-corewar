@@ -63,11 +63,10 @@ codestyle:
 	cat coding-style-reports.log
 	rm -f coding-style-reports.log
 
-coding_style: clean
+coding_style: fclean
 	cd ../coding-style-checker/ \
 	&& ./coding-style.sh ../B-CPE-200-MAR-2-1-corewar-kevin.huynh/ \
 	&& cd ../B-CPE-200-MAR-2-1-corewar-kevin.huynh/ \
-	&& make \
 	&& clear \
 	&& cd ../coding-style-checker/ \
 	&& cat coding-style-reports.log
@@ -85,7 +84,7 @@ unit_tests: re
 push: fclean
 	@(find . -type f -name "#.#" -delete -o -name "*~" -delete)
 	@(git add .)
-	@(git commit -m "[FIX] Fixed Code Structure.")
+	@(git commit -m "[FIX] Fixed segfault from Kevin struct")
 	@(git push)
 
 test: all

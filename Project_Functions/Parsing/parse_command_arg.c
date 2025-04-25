@@ -25,19 +25,14 @@ int check_flags_two(resources_t *resources, int argc, char **argv, int i)
 
 int check_flags(resources_t *resources, int argc, char **argv, int i)
 {
-    printf("caca tout check flag\n");
     if (my_strcmp(&argv[i][1], "dump") == 0) {
         resources->flags->dump++;
-        printf("caca tout strcmp kevin siat pas coder\n");
         if (argc > i + 1) {
-            printf("caca HELP\n");
             resources->nbr_cycle = my_atoi(argv[i + 1]);
-            printf("caca tout HELP\n");
         } else {
             return -1;
         }
     }
-    printf("HELP\n");
     if (my_strcmp(&argv[i][1], "n") == 0) {
         resources->flags->n++;
         if (argc > i + 1 && !is_number(argv[i + 1]))
@@ -49,13 +44,11 @@ int check_flags(resources_t *resources, int argc, char **argv, int i)
             return -1;
         }
     }
-    printf("caca tout fin de check flags\n");
     return check_flags_two(resources, argc, argv, i);
 }
 
-int flags_errors(resources_t *resources, char **argv, int i)
+static int flags_errors(resources_t *resources, char **argv, int i)
 {
-    printf("caca tout flags_error\n");
     if (resources->flags->dump != 1)
         return -1;
     if (resources->flags->a + resources->flags->n > 2)
@@ -67,9 +60,26 @@ int flags_errors(resources_t *resources, char **argv, int i)
 
 void reset_flags(resources_t *resources)
 {
-    printf("caca tout reset\n");
     resources->flags->n = 0;
     resources->flags->a = 0;
+}
+
+int parse_champion(resources_t *resources, char **argv)
+{
+    resources->nb_champion++;
+    resources->champion_list = realloc(resources->champion_list,
+        sizeof(champion_t *) * (resources->nb_champion + 1));
+    resources->champion_list[resources->nb_champion - 1] =
+        malloc(sizeof(champion_t));
+    if (check_malloc(resources->champion_list[resources->nb_champion - 1],
+            "champion_list[i]: Malloc Failed.\n") == -1)
+        return -1;
+    resources->champion_list[resources->nb_champion] = NULL;
+    reset_flags(resources);
+    if (read_file(resources->champion_list[resources->nb_champion - 1],
+            argv) == -1)
+        return -1;
+    return 0;
 }
 
 int parse_command_arg(resources_t *resources, int argc, char **argv, int i)
@@ -77,26 +87,12 @@ int parse_command_arg(resources_t *resources, int argc, char **argv, int i)
     if (argv[i][0] == '-') {
         if (check_flags(resources, argc, argv, i) == -1)
             return -1;
-        printf("caca tout passé\n");
         if (flags_errors(resources, argv, i) == -1)
             return -1;
         i++;
     }
     if (argv[i][0] != '-') {
-        printf("caca tout\n");
-        resources->nb_champion++;
-        resources->champion_list = realloc(resources->champion_list,
-            sizeof(champion_t *) * (resources->nb_champion + 1));
-        resources->champion_list[resources->nb_champion - 1] =
-            malloc(sizeof(champion_t));
-        if (check_malloc(resources->champion_list[resources->nb_champion - 1],
-                "champion_list[i]: Malloc Failed.\n") == -1)
-            return -1;
-        resources->champion_list[resources->nb_champion - 1] = NULL;
-        resources->champion_list[resources->nb_champion] = NULL;
-        reset_flags(resources);
-        if (read_file(resources->champion_list[resources->nb_champion - 1],
-                argv) == -1)
+        if (parse_champion(resources, argv) == -1)
             return -1;
     }
     return 0;

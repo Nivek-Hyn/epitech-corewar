@@ -9,7 +9,7 @@
 
 void free_all(resources_t *resources)
 {
-    for (int i = 0; resources->champion_list && 
+    for (int i = 0; resources->champion_list &&
         resources->champion_list[i] != NULL; i++) {
         if (resources->champion_list[i]->name)
             free(resources->champion_list[i]->name);
