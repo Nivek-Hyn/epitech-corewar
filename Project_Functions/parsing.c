@@ -116,7 +116,7 @@ int read_file(resources_t *resources, champion_t *champion,
         return -1;
     if (fill_champion_code(file, champion) == -1)
         return -1;
-    printf("name: %s\ncomment: %s\nprog_size: %d\nprog_number: %d\nload_adress: %d\n", champion->name, champion->comment, champion->prog_size, champion->prog_number, champion->load_address, champion->code);
+    printf("name: %s\ncomment: %s\nprog_size: %d\nprog_number: %d\nload_adress: %d\n", champion->name, champion->comment, champion->prog_size, champion->prog_number, champion->load_address);
     fclose(file);
     return 0;
 }
