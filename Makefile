@@ -84,7 +84,7 @@ unit_tests: re
 push: fclean
 	@(find . -type f -name "#.#" -delete -o -name "*~" -delete)
 	@(git add .)
-	@(git commit -m "[FIX] Fixed segfault from Kevin struct")
+	@(git commit -m "[ADDED] Parsed multiple champions.")
 	@(git push)
 
 test: all

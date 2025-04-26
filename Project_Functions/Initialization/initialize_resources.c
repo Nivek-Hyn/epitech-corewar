@@ -16,7 +16,9 @@ int initialize_resources(resources_t *resources)
         return -1;
     resources->flags->dump = 0;
     resources->flags->n = 0;
+    resources->flags->prog_number = 0;
     resources->flags->a = 0;
+    resources->flags->load_address = 0;
     resources->nbr_cycle = 0;
     return 0;
 }

@@ -13,12 +13,10 @@ int check_flags_two(resources_t *resources, int argc, char **argv, int i)
         resources->flags->a++;
         if (argc > i + 1 && !is_number(argv[i + 1]))
             return -1;
-        if (argc > i + 1 && resources->champion_list[resources->nb_champion]) {
-            resources->champion_list[resources->nb_champion]->load_address =
-                my_atoi(argv[i + 1]);
-        } else {
+        if (argc <= i + 1)
             return -1;
-        }
+        if (argc > i + 1)
+            resources->flags->load_address = my_atoi(argv[i + 1]);
     }
     return 0;
 }
@@ -37,12 +35,10 @@ int check_flags(resources_t *resources, int argc, char **argv, int i)
         resources->flags->n++;
         if (argc > i + 1 && !is_number(argv[i + 1]))
             return -1;
-        if (argc > i + 1 && resources->champion_list[resources->nb_champion]) {
-            resources->champion_list[resources->nb_champion]->prog_number =
-                my_atoi(argv[i + 1]);
-        } else {
+        if (argc <= i + 1)
             return -1;
-        }
+        if (argc > i + 1)
+            resources->flags->prog_number = my_atoi(argv[i + 1]);
     }
     return check_flags_two(resources, argc, argv, i);
 }
@@ -64,7 +60,7 @@ void reset_flags(resources_t *resources)
     resources->flags->a = 0;
 }
 
-int parse_champion(resources_t *resources, char **argv)
+int parse_champion(resources_t *resources, char **argv, int i)
 {
     resources->nb_champion++;
     resources->champion_list = realloc(resources->champion_list,
@@ -76,23 +72,25 @@ int parse_champion(resources_t *resources, char **argv)
         return -1;
     resources->champion_list[resources->nb_champion] = NULL;
     reset_flags(resources);
-    if (read_file(resources->champion_list[resources->nb_champion - 1],
-            argv) == -1)
+    if (read_file(resources,
+            resources->champion_list[resources->nb_champion - 1],
+                argv[i]) == -1)
         return -1;
     return 0;
 }
 
-int parse_command_arg(resources_t *resources, int argc, char **argv, int i)
+int parse_command_arg(resources_t *resources, int argc, char **argv, int *i)
 {
-    if (argv[i][0] == '-') {
-        if (check_flags(resources, argc, argv, i) == -1)
+    if (argv[*i][0] == '-') {
+        if (check_flags(resources, argc, argv, *i) == -1)
             return -1;
-        if (flags_errors(resources, argv, i) == -1)
+        if (flags_errors(resources, argv, *i) == -1)
             return -1;
-        i++;
+        (*i)++;
+        return 0;
     }
-    if (argv[i][0] != '-') {
-        if (parse_champion(resources, argv) == -1)
+    if (argv[*i][0] != '-') {
+        if (parse_champion(resources, argv, *i) == -1)
             return -1;
     }
     return 0;

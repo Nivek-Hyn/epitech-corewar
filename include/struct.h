@@ -11,7 +11,9 @@
 typedef struct flags {
     int dump;
     int n;
+    int prog_number;
     int a;
+    int load_address;
 } flags_t;
 
 typedef struct champion_s {

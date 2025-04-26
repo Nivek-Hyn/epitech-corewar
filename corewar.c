@@ -40,7 +40,7 @@ int check_args(int argc, char **argv)
 int corewar(resources_t *resources, int argc, char **argv)
 {
     for (int i = 1; i < argc; i++) {
-        if (parse_command_arg(resources, argc, argv, i) == -1)
+        if (parse_command_arg(resources, argc, argv, &i) == -1)
             return -1;
     }
     return 0;
