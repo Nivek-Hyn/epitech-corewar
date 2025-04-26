@@ -9,19 +9,20 @@
 
 void set_spawn_to_load_adress(resources_t *resources, champion_t *champion)
 {
-    for (int i = 0; i < MEM_SIZE; i++) {
-        if (i == champion->load_address) {
-            for (int j = 0; j != my_strlen(champion->code); i++) {
-                resources->arena[i] = champion->code[j];
-            }
-        }
+    int arena_pos;
+
+    for (int i = 0; i < my_strlen(champion->code); i++) {
+        arena_pos = (champion->load_address + i) % MEM_SIZE;
+        resources->arena[arena_pos] = champion->code[i];
     }
 }
 
 int calculate_distance(int pos1, int pos2)
 {
     int distance;
-    
+
+    pos1 = (pos1 + MEM_SIZE) % MEM_SIZE;
+    pos2 = (pos2 + MEM_SIZE) % MEM_SIZE;
     if (pos1 > pos2) {
         distance = pos1 - pos2;
     } else {
@@ -35,36 +36,42 @@ int calculate_distance(int pos1, int pos2)
 
 void set_spawn_to_farthest(resources_t *resources, champion_t *champion)
 {
-    int best_distance = MEM_SIZE;
+    int best_distance = 0;
+    int best_position = 0;
     int tmp;
+    int min_distance;
+    int arena_pos;
 
-    for (int i = 0; resources->champion_list[i] != NULL; i++) {
-        for (int j = 0; resources->champion_list[j] != NULL; j++) {
-            tmp = calculate_distance(resources->champion_list[i]->load_address, resources->champion_list[j]->load_address);
-            if (tmp < best_distance) {
-                best_distance = tmp;
+    for (int pos = 0; pos < MEM_SIZE; pos++) {
+        min_distance = MEM_SIZE;
+        for (int i = 0; resources->champion_list[i] != NULL; i++) {
+            tmp = calculate_distance(pos, resources->champion_list[i]->load_address);
+            if (tmp < min_distance) {
+                min_distance = tmp;
             }
+        }
+        if (min_distance > best_distance) {
+            best_distance = min_distance;
+            best_position = pos;
         }
     }
-    for (int i = 0; i < MEM_SIZE; i++) {
-        if (i == best_distance) {
-            for (int j = 0; j != my_strlen(champion->code); i++) {
-                resources->arena[i] = champion->code[j];
-            }
-        }
+    champion->load_address = best_position;
+    for (int i = 0; i < my_strlen(champion->code); i++) {
+        arena_pos = (best_position + i) % MEM_SIZE;
+        resources->arena[arena_pos] = champion->code[i];
     }
 }
 
 void deploy_champions(resources_t *resources)
 {
-    // for (int i = 0; resources->champion_list[i] != NULL; i++) {
-    //     if (resources->champion_list[i]->load_address != -1) {
-    //         set_spawn_to_load_adress(resources, resources->champion_list[i]);
-    //     }
-    // }
-    // for (int i = 0; resources->champion_list[i] != NULL; i++) {
-    //     if (resources->champion_list[i]->load_address != -1) {
-    //         set_spawn_to_load_adress(resources, resources->champion_list[i]);
-    //     }
-    // }
+    for (int i = 0; resources->champion_list[i] != NULL; i++) {
+        if (resources->champion_list[i]->load_address != -1) {
+            set_spawn_to_load_adress(resources, resources->champion_list[i]);
+        }
+    }
+    for (int i = 0; resources->champion_list[i] != NULL; i++) {
+        if (resources->champion_list[i]->load_address == -1) {
+            set_spawn_to_farthest(resources, resources->champion_list[i]);
+        }
+    }
 }
