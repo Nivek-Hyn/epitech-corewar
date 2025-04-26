@@ -18,9 +18,6 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <stdint.h>
-#include "define.h"
-#include "struct.h"
-#include "op.h"
 
 #ifndef BASIC
     #define BASIC

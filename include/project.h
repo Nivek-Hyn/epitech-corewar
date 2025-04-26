@@ -6,6 +6,9 @@
 */
 
 #include "my.h"
+#include "op.h"
+#include "define.h"
+#include "struct.h"
 
 #ifndef PROJECT
     #define PROJECT
@@ -14,9 +17,12 @@
 int read_file(resources_t *resources, champion_t *champion,
     char *champion_file);
 
+// Launch project:
+void deploy_champions(resources_t *resources);
+
 // Initializations:
 int initialize_resources(resources_t *resources);
-void initialize_champion(champion_t *champion);
+int initialize_champion(champion_t *champion);
 
 // Parsing:
 int parse_command_arg(resources_t *resources, int argc, char **argv, int *i);

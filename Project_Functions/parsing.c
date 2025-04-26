@@ -22,7 +22,8 @@ int check_validity(champion_t *champion, char *champion_file)
 {
     if (!champion)
         return -1;
-    initialize_champion(champion);
+    if (initialize_champion(champion) == -1)
+        return -1;
     if (!(my_strstr(champion_file, ".cor")))
         return -1;
 }
@@ -79,6 +80,20 @@ int fill_champion_comment(FILE *file, champion_t *champion)
     return 0;
 }
 
+int fill_champion_code(FILE *file, champion_t *champion)
+{
+    champion->code = malloc(sizeof(char) * champion->prog_size);
+    if (check_malloc(champion->comment,
+        "champion->code: Malloc Failed.\n") == -1)
+        return -1;
+    if (fread(champion->code, sizeof(char),
+        champion->prog_size, file) != champion->prog_size) {
+        fclose(file);
+        return -1;
+    }
+    return 0;
+}
+
 int read_file(resources_t *resources, champion_t *champion,
     char *champion_file)
 {
@@ -99,7 +114,9 @@ int read_file(resources_t *resources, champion_t *champion,
         return -1;
     if (fill_champion_comment(file, champion) == -1)
         return -1;
-    printf("name: %s\ncomment: %s\nprog_size: %d\nprog_number: %d\nload_adress: %d\n", champion->name, champion->comment, champion->prog_size, champion->prog_number, champion->load_address);
+    if (fill_champion_code(file, champion) == -1)
+        return -1;
+    printf("name: %s\ncomment: %s\nprog_size: %d\nprog_number: %d\nload_adress: %d\n", champion->name, champion->comment, champion->prog_size, champion->prog_number, champion->load_address, champion->code);
     fclose(file);
     return 0;
 }
