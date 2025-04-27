@@ -19,6 +19,7 @@ process_t *create_process(void)
     new_process->carry = 0;
     new_process->pc = 0;
     new_process->waiting_cycles = 0;
+    new_process->current_instruction = -1;
     new_process->next = NULL;
     return new_process;
 }

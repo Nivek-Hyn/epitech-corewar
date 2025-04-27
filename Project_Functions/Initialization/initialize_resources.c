@@ -22,5 +22,6 @@ int initialize_resources(resources_t *resources)
     resources->nbr_cycle = 0;
     for (int i = 0; i < MEM_SIZE; i++)
         resources->arena[i] = 0;
+    resources->arena[MEM_SIZE] = '\0';
     return 0;
 }

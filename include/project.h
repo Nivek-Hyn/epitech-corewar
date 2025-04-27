@@ -39,6 +39,7 @@ process_t *create_process(void);
 // Utility:
 uint32_t convert_big_endian_to_little_endian(uint32_t Big_Endian);
 int champions_left(resources_t *resources);
+void print_arena(resources_t *resources);
 
 // Free Functions:
 void free_all(resources_t *resources);
