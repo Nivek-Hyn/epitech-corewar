@@ -9,7 +9,7 @@
 
 void set_spawn_to_load_adress(resources_t *resources, champion_t *champion)
 {
-    int arena_pos;
+    int arena_pos = 0;
 
     for (int i = 0; i < my_strlen(champion->code); i++) {
         arena_pos = (champion->load_address + i) % MEM_SIZE;
@@ -19,7 +19,7 @@ void set_spawn_to_load_adress(resources_t *resources, champion_t *champion)
 
 int calculate_distance(int pos1, int pos2)
 {
-    int distance;
+    int distance = 0;
 
     pos1 = (pos1 + MEM_SIZE) % MEM_SIZE;
     pos2 = (pos2 + MEM_SIZE) % MEM_SIZE;
@@ -38,9 +38,9 @@ void set_spawn_to_farthest(resources_t *resources, champion_t *champion)
 {
     int best_distance = 0;
     int best_position = 0;
-    int tmp;
-    int min_distance;
-    int arena_pos;
+    int tmp = 0;
+    int min_distance = 0;
+    int arena_pos = 0;
 
     for (int pos = 0; pos < MEM_SIZE; pos++) {
         min_distance = MEM_SIZE;

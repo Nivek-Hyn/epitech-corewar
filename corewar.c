@@ -37,35 +37,6 @@ int check_args(int argc, char **argv)
     return 0;
 }
 
-/*int processes_left(champion_t *champion)
-{
-    int count = 0;
-
-    for (process_t *current = champion->processes; current; current = current->next) {
-        if (champion->processes != NULL)
-            count++;
-    }
-    return count;
-}
-
-int champions_left(resources_t *resources)
-{
-    int count = 0;
-
-    for (int i = 0; resources->champion_list[i] != NULL; i++) {
-        if (resources->champion_list[i]->processes != NULL)
-            count++;
-    }
-    return count;
-}
-
-void run_corewar(resources_t *resources)
-{
-    for (int i = 0; champions_left(resources) > 1; i++) {
-
-    }
-}*/
-
 int corewar(resources_t *resources, int argc, char **argv)
 {
     for (int i = 1; i < argc; i++) {
@@ -73,7 +44,7 @@ int corewar(resources_t *resources, int argc, char **argv)
             return -1;
     }
     deploy_champions(resources);
-    //run_corewar(resources);
+    run_corewar(resources);
     return 0;
 }
 

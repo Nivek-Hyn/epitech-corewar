@@ -7,6 +7,18 @@
 
 #include "project.h"
 
+void free_all_processes(process_t *processes)
+{
+    process_t *current = processes;
+    process_t *to_delete = NULL;
+
+    while (current) {
+        to_delete = current;
+        current = current->next;
+        free(to_delete);
+    }
+}
+
 void free_all(resources_t *resources)
 {
     for (int i = 0; resources->champion_list &&
@@ -17,6 +29,8 @@ void free_all(resources_t *resources)
             free(resources->champion_list[i]->comment);
         if (resources->champion_list[i]->code)
             free(resources->champion_list[i]->code);
+        if (resources->champion_list[i]->processes)
+            free_all_processes(resources->champion_list[i]->processes);
         if (resources->champion_list[i])
             free(resources->champion_list[i]);
     }

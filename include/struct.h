@@ -21,6 +21,7 @@ typedef struct process_s {
     int registers[REG_NUMBER];
     int carry;
     int pc;
+    int waiting_cycles;
     struct process_s *next;
 } process_t;
 
@@ -39,7 +40,7 @@ typedef struct resources_s {
     int nb_champion;
     flags_t *flags;
     int nbr_cycle;
-    char *arena;
+    char arena[MEM_SIZE];
 } resources_t;
 
 #endif // STRUCT_H //
