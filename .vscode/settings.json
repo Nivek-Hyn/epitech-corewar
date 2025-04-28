@@ -6,7 +6,8 @@
         "sstream": "c",
         "system_error": "c",
         "random": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "cstdint": "c"
     },
     "github.copilot.enable": {
         "*": false,

@@ -11,7 +11,7 @@ void set_spawn_to_load_address(resources_t *resources, champion_t *champion)
 {
     int arena_pos = 0;
 
-    printf("toi at: %d\n", champion->load_address);
+    printf("Champion at load address: %d\n", champion->load_address);
     for (int i = 0; i < champion->prog_size; i++) {
         arena_pos = (champion->load_address + i) % MEM_SIZE;
         resources->arena[arena_pos] = champion->code[i];
@@ -20,72 +20,89 @@ void set_spawn_to_load_address(resources_t *resources, champion_t *champion)
 
 int calculate_distance(int pos1, int pos2)
 {
-    int distance = 0;
+    int direct_distance = pos1 - pos2;
+    int wrap_distance;
 
-    pos1 = (pos1 + MEM_SIZE) % MEM_SIZE;
-    pos2 = (pos2 + MEM_SIZE) % MEM_SIZE;
-    if (pos1 > pos2) {
-        distance = pos1 - pos2;
+    if (direct_distance < 0)
+        direct_distance *= -1;
+    wrap_distance = MEM_SIZE - direct_distance;
+    if (direct_distance < wrap_distance) {
+        return direct_distance;
     } else {
-        distance = pos2 - pos1;
+        return wrap_distance;
     }
-    if (distance > MEM_SIZE / 2) {
-        distance = MEM_SIZE - distance;
-    }
-    return distance;
 }
 
-void find_farthest_point(resources_t *resources,
-    champion_t *champion, int *best_position, int pos)
+void check_and_change_position(resources_t *resources, int pos, int *distance, int *min_distance)
 {
-    int tmp = 0;
-    int min_distance = MEM_SIZE;
-    int best_distance = 0;
-
     for (int i = 0; resources->champion_list[i] != NULL; i++) {
-        tmp = calculate_distance(pos,
-            resources->champion_list[i]->load_address);
-        if (tmp < min_distance) {
-            min_distance = tmp;
+        if (resources->champion_list[i]->load_address == -1) {
+            continue;
+        }
+        (*distance) = calculate_distance(pos, resources->champion_list[i]->load_address);
+        if ((*distance) < (*min_distance)) {
+            (*min_distance) = (*distance);
         }
     }
-    if (min_distance > best_distance) {
-        best_distance = min_distance;
-        (*best_position) = pos;
+}
+
+int find_optimal_position(resources_t *resources)
+{
+    int best_pos = 0;
+    int best_min_distance = -1;
+    int min_distance = MEM_SIZE;
+    int distance;
+
+    for (int pos = 0; pos < MEM_SIZE; pos++) {
+        min_distance = MEM_SIZE;
+        check_and_change_position(resources, pos, &distance, &min_distance);
+        if (min_distance > best_min_distance) {
+            best_min_distance = min_distance;
+            best_pos = pos;
+        }
     }
+    return best_pos;
 }
 
 void set_spawn_to_farthest(resources_t *resources, champion_t *champion)
 {
-    static int best_position = 0;
-    int arena_pos = 0;
-    static int cmp = 1;
+    int optimal_pos = find_optimal_position(resources);
 
-    if (cmp == 1)
-        for (int pos = 0; pos < MEM_SIZE; pos++)
-            find_farthest_point(resources, champion, &best_position, pos);
-    champion->load_address = cmp * (best_position % resources->nb_champion);
-    champion->processes->pc = champion->load_address;
-    printf("resource nb_champ = %d\n", resources->nb_champion);
-    printf("best pos = %d\n", best_position);
-    printf("%d\n", champion->load_address);
-    for (int i = 0; i < champion->prog_size; i++) {
-        arena_pos = (best_position + i) % MEM_SIZE;
-        resources->arena[arena_pos] = champion->code[i];
+    champion->load_address = optimal_pos;
+    set_spawn_to_load_address(resources, champion);
+}
+
+void set_prog_number(resources_t *resources, champion_t *champion)
+{
+    int max = MAX_SIZE;
+    int cmp;
+
+    for (int i = 0; i < resources->nb_champion; i++) {
+        if (resources->champion_list[i]->prog_number != -1) {
+            cmp = resources->champion_list[i]->prog_number
+        }
+        if (cmp < max) {
+            max = cmp;
+        }
     }
-    cmp++;
+    champion->prog_number = max - 1;
 }
 
 void deploy_champions(resources_t *resources)
 {
-    for (int i = 0; resources->champion_list[i] != NULL; i++) {
+    int spacing;
+
+    for (int i = 0; i < resources->nb_champion; i++) {
         if (resources->champion_list[i]->load_address != -1) {
             set_spawn_to_load_address(resources, resources->champion_list[i]);
         }
     }
-    for (int i = 0; resources->champion_list[i] != NULL; i++) {
+    for (int i = 0; i < resources->nb_champion; i++) {
         if (resources->champion_list[i]->load_address == -1) {
             set_spawn_to_farthest(resources, resources->champion_list[i]);
+        }
+        if (resources->champion_list[i]->prog_number == -1) {
+            set_prog_number(resources, resources->champion_list[i]);
         }
     }
 }

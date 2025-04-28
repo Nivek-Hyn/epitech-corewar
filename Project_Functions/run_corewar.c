@@ -23,44 +23,68 @@ int check_if_has_coding_byte(char opcode)
     }
 }
 
-int get_instruction_nbr_parameters(char opcode)
+const op_t instruction_info(char opcode)
 {
     for (int i = 0; op_tab[i].code != 0; i++) {
         if (op_tab[i].code == opcode)
-            return op_tab[i].nbr_args;
+            return op_tab[i];
     }
-    return NBR_INSTRUCTIONS;
+    return op_tab[NBR_INSTRUCTIONS - 1];
+}
+
+int get_parameter_size(char coding_byte, int bit_index, int second_bit_index)
+{
+    int first_bit = ((coding_byte & (1 << (8 - bit_index))) ? 1 : 0);
+    int second_bit = ((coding_byte & (1 << (8 - second_bit_index))) ? 1 : 0);
+
+    if (first_bit == 0 && second_bit == 1)
+        return 1;
+    if (first_bit == 1 && second_bit == 0)
+        return DIR_SIZE;
+    if (first_bit == 1 && second_bit == 1)
+        return IND_SIZE;
+    return 0;
 }
 
 void advance_instruction(resources_t *resources, process_t *process)
 {
-    int nbr_params =
-        get_instruction_nbr_parameters(process->current_instruction);
+    int nbr_params = instruction_info(process->current_instruction).nbr_args;
     int has_coding_byte =
         check_if_has_coding_byte(process->current_instruction);
+    int advance = 1;
 
-    for (int i = 0; i < nbr_params; i++) {
-        
+    if (has_coding_byte != 1) {
+        advance += DIR_SIZE;
+    } else {
+        advance++;
+        for (int i = 1; i < nbr_params * 2; i += 2) {
+            advance += get_parameter_size(
+                resources->arena[process->pc] + 1, i, i + 1);
+        }
     }
+    process->pc += advance;
 }
 
-void run_instruction(resources_t *resources, process_t *process)
+void run_instruction(resources_t *resources, champion_t *champion,
+    process_t *process)
 {
-    void (*instructions[NBR_INSTRUCTIONS])(resources_t *, process_t *) =
+    void (*instructions[NBR_INSTRUCTIONS])
+        (resources_t *, champion_t *, process_t *) =
         {exec_live, exec_ld, exec_add, exec_sub, exec_and, exec_or,
             exec_xor, exec_zjmp, exec_ldi, exec_sti, exec_fork, exec_lld,
                 exec_lldi, exec_lfork, exec_aff};
 
     for (int i = 0; op_tab[i].code != 0; i++) {
         if (op_tab[i].code == process->current_instruction)
-            instructions[i](resources, process);
+            instructions[i](resources, champion, process);
     }
 }
 
-void run_process(resources_t *resources, process_t *process)
+void run_process(resources_t *resources, champion_t *champion,
+    process_t *process)
 {
     if (process->current_instruction != -1 && process->waiting_cycles == 0) {
-        //run_instruction(resources, process);
+        run_instruction(resources, champion, process);
         advance_instruction(resources, process);
     }
     if (process->waiting_cycles == 0) {
@@ -79,7 +103,7 @@ void run_champion_processes(resources_t *resources, champion_t *champion)
     process_t *current = champion->processes;
 
     while (current) {
-        run_process(resources, current);
+        run_process(resources, champion, current);
         current = current->next;
     }
 }
@@ -100,7 +124,7 @@ void run_corewar(resources_t *resources)
     for (int cycle = 0; champions_left(resources) > 1; cycle++) {
         printf("cycle: %d\n", cycle);
         if (cycle == resources->nbr_cycle) {
-            //print_arena(resources);
+            print_arena(resources);
             return;
         }
         run_all_processes(resources);

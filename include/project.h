@@ -37,22 +37,38 @@ int fill_champion_code(FILE *file, champion_t *champion);
 process_t *create_process(void);
 
 // Exec instruction:
-void exec_live(resources_t *resources, process_t *process);
-void exec_ld(resources_t *resources, process_t *process);
-void exec_st(resources_t *resources, process_t *process);
-void exec_add(resources_t *resources, process_t *process);
-void exec_sub(resources_t *resources, process_t *process);
-void exec_and(resources_t *resources, process_t *process);
-void exec_or(resources_t *resources, process_t *process);
-void exec_xor(resources_t *resources, process_t *process);
-void exec_zjmp(resources_t *resources, process_t *process);
-void exec_ldi(resources_t *resources, process_t *process);
-void exec_sti(resources_t *resources, process_t *process);
-void exec_fork(resources_t *resources, process_t *process);
-void exec_lld(resources_t *resources, process_t *process);
-void exec_lldi(resources_t *resources, process_t *process);
-void exec_lfork(resources_t *resources, process_t *process);
-void exec_aff(resources_t *resources, process_t *process);
+void exec_live(resources_t *resources, champion_t *champion,
+    process_t *process);
+void exec_ld(resources_t *resources, champion_t *champion,
+    process_t *process);
+void exec_st(resources_t *resources, champion_t *champion,
+    process_t *process);
+void exec_add(resources_t *resources, champion_t *champion,
+    process_t *process);
+void exec_sub(resources_t *resources, champion_t *champion,
+    process_t *process);
+void exec_and(resources_t *resources, champion_t *champion,
+    process_t *process);
+void exec_or(resources_t *resources, champion_t *champion,
+    process_t *process);
+void exec_xor(resources_t *resources, champion_t *champion,
+    process_t *process);
+void exec_zjmp(resources_t *resources, champion_t *champion,
+    process_t *process);
+void exec_ldi(resources_t *resources, champion_t *champion,
+    process_t *process);
+void exec_sti(resources_t *resources, champion_t *champion,
+    process_t *process);
+void exec_fork(resources_t *resources, champion_t *champion,
+    process_t *process);
+void exec_lld(resources_t *resources, champion_t *champion,
+    process_t *process);
+void exec_lldi(resources_t *resources, champion_t *champion,
+    process_t *process);
+void exec_lfork(resources_t *resources, champion_t *champion,
+    process_t *process);
+void exec_aff(resources_t *resources, champion_t *champion,
+    process_t *process);
 
 // Utility:
 uint32_t convert_big_endian_to_little_endian(uint32_t Big_Endian);

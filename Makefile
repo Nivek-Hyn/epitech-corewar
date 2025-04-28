@@ -84,7 +84,7 @@ unit_tests: re
 push: fclean
 	@(find . -type f -name "#.#" -delete -o -name "*~" -delete)
 	@(git add .)
-	@(git commit -m "[ADD] Prototypes for exec functions (instructions).")
+	@(git commit -m "[ADD] Processes can now advance instruction by instruction.")
 	@(git push)
 
 test: all

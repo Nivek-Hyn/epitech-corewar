@@ -10,7 +10,7 @@
 
     #define ERROR_NUM 84
     #define MAX_SIZE 2147483647
-    #define SUCCED 0
+    #define SUCCEED 0
     #define NBR_INSTRUCTIONS 16
 
 #endif /* DEFINE_H_ */
