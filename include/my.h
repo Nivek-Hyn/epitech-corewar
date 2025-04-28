@@ -142,24 +142,6 @@ void my_putstr_stderr(char *str);
 void my_putnbr_stderr(int nb);
 void mini_printf_stderr(const char *format, ...);
 
-// Exec instruction:
-void exec_live(resources_t *resources, process_t *process);
-void exec_ld(resources_t *resources, process_t *process);
-void exec_st(resources_t *resources, process_t *process);
-void exec_add(resources_t *resources, process_t *process);
-void exec_sub(resources_t *resources, process_t *process);
-void exec_and(resources_t *resources, process_t *process);
-void exec_or(resources_t *resources, process_t *process);
-void exec_xor(resources_t *resources, process_t *process);
-void exec_zjmp(resources_t *resources, process_t *process);
-void exec_ldi(resources_t *resources, process_t *process);
-void exec_sti(resources_t *resources, process_t *process);
-void exec_fork(resources_t *resources, process_t *process);
-void exec_lld(resources_t *resources, process_t *process);
-void exec_lldi(resources_t *resources, process_t *process);
-void exec_lfork(resources_t *resources, process_t *process);
-void exec_aff(resources_t *resources, process_t *process);
-
 // Other:
 int execute_command(char *command, char **args, char **env);
 

@@ -26,6 +26,7 @@ int read_file(resources_t *resources, champion_t *champion,
         return -1;
     champion->prog_number = resources->flags->prog_number;
     champion->load_address = resources->flags->load_address;
+    resources->flags->load_address = -1;
     file = fopen(champion_file, "rb");
     if (!file)
         return -1;

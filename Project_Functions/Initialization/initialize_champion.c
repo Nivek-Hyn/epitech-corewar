@@ -10,7 +10,7 @@
 int initialize_champion(champion_t *champion)
 {
     champion->prog_number = 0;
-    champion->load_address = 0;
+    champion->load_address = -1;
     champion->name = NULL;
     champion->comment = NULL;
     champion->prog_size = 0;

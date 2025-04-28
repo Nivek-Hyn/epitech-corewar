@@ -7,9 +7,46 @@
 
 #include "project.h"
 
+int check_if_has_coding_byte(char opcode)
+{
+    switch (opcode) {
+        case 1:
+            return 0;
+        case 9:
+            return 0;
+        case 12:
+            return 0;
+        case 15:
+            return 0;
+        default:
+            return 1;
+    }
+}
+
+int get_instruction_nbr_parameters(char opcode)
+{
+    for (int i = 0; op_tab[i].code != 0; i++) {
+        if (op_tab[i].code == opcode)
+            return op_tab[i].nbr_args;
+    }
+    return NBR_INSTRUCTIONS;
+}
+
+void advance_instruction(resources_t *resources, process_t *process)
+{
+    int nbr_params =
+        get_instruction_nbr_parameters(process->current_instruction);
+    int has_coding_byte =
+        check_if_has_coding_byte(process->current_instruction);
+
+    for (int i = 0; i < nbr_params; i++) {
+        
+    }
+}
+
 void run_instruction(resources_t *resources, process_t *process)
 {
-    void (*instructions[16])(resources_t *, process_t *) =
+    void (*instructions[NBR_INSTRUCTIONS])(resources_t *, process_t *) =
         {exec_live, exec_ld, exec_add, exec_sub, exec_and, exec_or,
             exec_xor, exec_zjmp, exec_ldi, exec_sti, exec_fork, exec_lld,
                 exec_lldi, exec_lfork, exec_aff};
@@ -24,7 +61,7 @@ void run_process(resources_t *resources, process_t *process)
 {
     if (process->current_instruction != -1 && process->waiting_cycles == 0) {
         //run_instruction(resources, process);
-        // Avancer l'instruction
+        advance_instruction(resources, process);
     }
     if (process->waiting_cycles == 0) {
         process->current_instruction = resources->arena[process->pc];
@@ -63,7 +100,7 @@ void run_corewar(resources_t *resources)
     for (int cycle = 0; champions_left(resources) > 1; cycle++) {
         printf("cycle: %d\n", cycle);
         if (cycle == resources->nbr_cycle) {
-            print_arena(resources);
+            //print_arena(resources);
             return;
         }
         run_all_processes(resources);

@@ -42,7 +42,6 @@ typedef struct resources_s {
     flags_t *flags;
     int nbr_cycle;
     char arena[MEM_SIZE];
-    instructions_t instructions[17];
 } resources_t;
 
 #endif // STRUCT_H //
