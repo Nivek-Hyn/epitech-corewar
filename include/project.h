@@ -34,7 +34,7 @@ int fill_champion_comment(FILE *file, champion_t *champion);
 int fill_champion_code(FILE *file, champion_t *champion);
 
 // Process:
-process_t *create_process(void);
+process_t *create_process(process_t *processes);
 
 // Exec instruction:
 void exec_live(resources_t *resources, champion_t *champion,

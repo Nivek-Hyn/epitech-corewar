@@ -7,7 +7,13 @@
         "system_error": "c",
         "random": "c",
         "algorithm": "c",
-        "cstdint": "c"
+        "cstdint": "c",
+        "functional": "c",
+        "optional": "c",
+        "array": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c"
     },
     "github.copilot.enable": {
         "*": false,

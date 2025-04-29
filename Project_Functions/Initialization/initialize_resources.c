@@ -20,8 +20,10 @@ int initialize_resources(resources_t *resources)
     resources->flags->a = 0;
     resources->flags->load_address = -1;
     resources->nbr_cycle = 0;
-    for (int i = 0; i < MEM_SIZE; i++)
+    for (int i = 0; i < MEM_SIZE; i++) {
         resources->arena[i] = 0;
+        resources->owner[i] = -1;
+    }
     resources->arena[MEM_SIZE] = '\0';
     return 0;
 }

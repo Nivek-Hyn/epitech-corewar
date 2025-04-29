@@ -42,6 +42,29 @@ typedef struct resources_s {
     flags_t *flags;
     int nbr_cycle;
     char arena[MEM_SIZE];
+    int owner[MEM_SIZE];
 } resources_t;
+
+typedef struct sti_param_s {
+    int value2;
+    uint8_t type3;
+    int new_pc;
+    champion_t *champion;
+} sti_param_t;
+
+typedef struct ldi_params_s {
+    int value;
+    int offset;
+    int reg;
+    int pc_offset;
+} ldi_params_t;
+
+typedef struct st_params_s {
+    uint8_t type2;
+    int reg_final;
+    int32_t value;
+    int offset;
+    int addr_final;
+} st_params_t;
 
 #endif // STRUCT_H //

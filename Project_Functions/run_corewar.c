@@ -80,6 +80,14 @@ void run_instruction(resources_t *resources, champion_t *champion,
     }
 }
 
+static void set_process_waiting_cycles(process_t *process)
+{
+    for (int i = 0; op_tab[i].code != 0; i++) {
+        if (op_tab[i].code == process->current_instruction)
+            process->waiting_cycles = op_tab[i].nbr_cycles;
+    }
+}
+
 void run_process(resources_t *resources, champion_t *champion,
     process_t *process)
 {
@@ -89,10 +97,7 @@ void run_process(resources_t *resources, champion_t *champion,
     }
     if (process->waiting_cycles == 0) {
         process->current_instruction = resources->arena[process->pc];
-        for (int i = 0; op_tab[i].code != 0; i++) {
-            if (op_tab[i].code == process->current_instruction)
-                process->waiting_cycles = op_tab[i].nbr_cycles;
-        }
+        set_process_waiting_cycles(process);
     } else {
         process->waiting_cycles--;
     }

@@ -15,10 +15,11 @@ void set_spawn_to_load_address(resources_t *resources, champion_t *champion)
     for (int i = 0; i < champion->prog_size; i++) {
         arena_pos = (champion->load_address + i) % MEM_SIZE;
         resources->arena[arena_pos] = champion->code[i];
+        resources->owner[arena_pos] = champion->prog_number;
     }
 }
 
-int calculate_distance(int pos1, int pos2)
+static int calculate_distance(int pos1, int pos2)
 {
     int direct_distance = pos1 - pos2;
     int wrap_distance;
@@ -33,20 +34,22 @@ int calculate_distance(int pos1, int pos2)
     }
 }
 
-void check_and_change_position(resources_t *resources, int pos, int *distance, int *min_distance)
+void check_and_change_position(resources_t *resources, int pos,
+    int *distance, int *min_distance)
 {
     for (int i = 0; resources->champion_list[i] != NULL; i++) {
         if (resources->champion_list[i]->load_address == -1) {
             continue;
         }
-        (*distance) = calculate_distance(pos, resources->champion_list[i]->load_address);
+        (*distance) = calculate_distance(pos,
+            resources->champion_list[i]->load_address);
         if ((*distance) < (*min_distance)) {
             (*min_distance) = (*distance);
         }
     }
 }
 
-int find_optimal_position(resources_t *resources)
+static int find_optimal_position(resources_t *resources)
 {
     int best_pos = 0;
     int best_min_distance = -1;
@@ -64,7 +67,7 @@ int find_optimal_position(resources_t *resources)
     return best_pos;
 }
 
-void set_spawn_to_farthest(resources_t *resources, champion_t *champion)
+static void set_spawn_to_farthest(resources_t *resources, champion_t *champion)
 {
     int optimal_pos = find_optimal_position(resources);
 
@@ -79,7 +82,7 @@ void set_prog_number(resources_t *resources, champion_t *champion)
 
     for (int i = 0; i < resources->nb_champion; i++) {
         if (resources->champion_list[i]->prog_number != -1) {
-            cmp = resources->champion_list[i]->prog_number
+            cmp = resources->champion_list[i]->prog_number;
         }
         if (cmp < max) {
             max = cmp;

@@ -7,7 +7,22 @@
 
 #include "project.h"
 
-process_t *create_process(void)
+process_t *create_process_two(process_t *processes, process_t *new_process)
+{
+    process_t *current = processes;
+
+    if (processes == NULL) {
+        return new_process;
+    } else {
+        while (current->next) {
+            current = current->next;
+        }
+        current->next = new_process;
+        return processes;
+    }
+}
+
+process_t *create_process(process_t *processes)
 {
     process_t *new_process = malloc(sizeof(process_t));
 
@@ -21,5 +36,5 @@ process_t *create_process(void)
     new_process->waiting_cycles = 0;
     new_process->current_instruction = -1;
     new_process->next = NULL;
-    return new_process;
+    return create_process_two(processes, new_process);
 }
