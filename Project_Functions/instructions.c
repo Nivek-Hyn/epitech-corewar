@@ -31,7 +31,16 @@ void exec_live(resources_t *resources, champion_t *champion,
 void exec_ld(resources_t *resources, champion_t *champion,
     process_t *process)
 {
+    uint8_t coding_byte =
+        (uint8_t)resources->arena[(process->pc + 1) % MEM_SIZE];
+    uint8_t type1 = (coding_byte >> 6) & 0b11;
+    uint8_t type2 = (coding_byte >> 4) & 0b11;
 
+    if ((type1 == 0b10 || type1 == 0b11) && type2 == 0b01) {
+        process->carry = 1;
+        process->registers[type2] =
+            resources->arena[process->pc + type1 % IDX_MOD];
+    }
 }
 
 void exec_st(resources_t *resources, champion_t *champion,
@@ -43,31 +52,76 @@ void exec_st(resources_t *resources, champion_t *champion,
 void exec_add(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    
+    int first_register_index =
+        get_parameter_value(resources, (process->pc + 2) % MEM_SIZE, 1);
+    int second_register_index =
+        get_parameter_value(resources, (process->pc + 3) % MEM_SIZE, 1);
+    int third_register_index =
+        get_parameter_value(resources, (process->pc + 4) % MEM_SIZE, 1);
+
+    process->registers[third_register_index - 1] =
+        process->registers[first_register_index - 1] +
+            process->registers[second_register_index - 1];
 }
 
 void exec_sub(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    
+    int first_register_index =
+        get_parameter_value(resources, (process->pc + 2) % MEM_SIZE, 1);
+    int second_register_index =
+        get_parameter_value(resources, (process->pc + 3) % MEM_SIZE, 1);
+    int third_register_index =
+        get_parameter_value(resources, (process->pc + 4) % MEM_SIZE, 1);
+
+    process->registers[third_register_index - 1] =
+        process->registers[first_register_index - 1] -
+            process->registers[second_register_index - 1];
 }
 
 void exec_and(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    
+    int first_register_index =
+        get_parameter_value(resources, (process->pc + 2) % MEM_SIZE, 1);
+    int second_register_index =
+        get_parameter_value(resources, (process->pc + 3) % MEM_SIZE, 1);
+    int third_register_index =
+        get_parameter_value(resources, (process->pc + 4) % MEM_SIZE, 1);
+
+    process->registers[third_register_index - 1] =
+        process->registers[first_register_index - 1] &
+            process->registers[second_register_index - 1];
 }
 
 void exec_or(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    
+    int first_register_index =
+        get_parameter_value(resources, (process->pc + 2) % MEM_SIZE, 1);
+    int second_register_index =
+        get_parameter_value(resources, (process->pc + 3) % MEM_SIZE, 1);
+    int third_register_index =
+        get_parameter_value(resources, (process->pc + 4) % MEM_SIZE, 1);
+
+    process->registers[third_register_index - 1] =
+        process->registers[first_register_index - 1] |
+            process->registers[second_register_index - 1];
 }
 
 void exec_xor(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    
+    int first_register_index =
+        get_parameter_value(resources, (process->pc + 2) % MEM_SIZE, 1);
+    int second_register_index =
+        get_parameter_value(resources, (process->pc + 3) % MEM_SIZE, 1);
+    int third_register_index =
+        get_parameter_value(resources, (process->pc + 4) % MEM_SIZE, 1);
+
+    process->registers[third_register_index - 1] =
+        process->registers[first_register_index - 1] ^
+            process->registers[second_register_index - 1];
 }
 
 void exec_zjmp(resources_t *resources, champion_t *champion,
