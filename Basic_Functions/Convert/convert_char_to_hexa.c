@@ -9,7 +9,7 @@
 
 void convert_char_to_hexa(char c, char *dest)
 {
-    int nb = (int)c;
+    int nb = (unsigned char)c;
     int high = nb / 16;
     int low = nb % 16;
 

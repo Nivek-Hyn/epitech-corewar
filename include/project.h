@@ -27,6 +27,7 @@ void advance_instruction(resources_t *resources, process_t *process);
 // Initializations:
 int initialize_resources(resources_t *resources);
 int initialize_champion(champion_t *champion);
+void set_champions_prog_number(resources_t *resources);
 
 // Parsing:
 int parse_command_arg(resources_t *resources, int argc, char **argv, int *i);
@@ -73,6 +74,14 @@ void exec_lfork(resources_t *resources, champion_t *champion,
     process_t *process);
 void exec_aff(resources_t *resources, champion_t *champion,
     process_t *process);
+int extract_ldi_params(resources_t *resources,
+    process_t *process, ldi_params_t *params);
+void exec_ldi_write(int reg, int value, process_t *process);
+void st_checking(resources_t *resources,
+    process_t *process, champion_t *champion, st_params_t *p);
+uint32_t get_bytes_live(int pc, char *arena);
+void exec_ld_two(int reg, int value,
+    resources_t *resources, process_t *process);
 
 // Utility:
 uint32_t convert_big_endian_to_little_endian(uint32_t Big_Endian);
