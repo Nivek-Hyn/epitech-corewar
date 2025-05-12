@@ -43,6 +43,7 @@ int corewar(resources_t *resources, int argc, char **argv)
         if (parse_command_arg(resources, argc, argv, &i) == -1)
             return -1;
     }
+    set_champions_prog_number(resources);
     deploy_champions(resources);
     run_corewar(resources);
     return 0;

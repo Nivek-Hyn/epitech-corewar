@@ -20,6 +20,9 @@ int read_file(resources_t *resources, champion_t *champion,
 // Run Corewar:
 void deploy_champions(resources_t *resources);
 void run_corewar(resources_t *resources);
+void run_instruction(resources_t *resources, champion_t *champion,
+    process_t *process);
+void advance_instruction(resources_t *resources, process_t *process);
 
 // Initializations:
 int initialize_resources(resources_t *resources);
@@ -35,6 +38,7 @@ int fill_champion_code(FILE *file, champion_t *champion);
 
 // Process:
 process_t *create_process(process_t *processes);
+void run_all_processes(resources_t *resources);
 
 // Exec instruction:
 void exec_live(resources_t *resources, champion_t *champion,
