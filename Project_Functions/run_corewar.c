@@ -13,10 +13,14 @@ void run_corewar(resources_t *resources)
     int cycle_checker = 0;
 
     for (int cycle = 0; champions_left(resources) > 1; cycle++) {
-        if (cycle == resources->nbr_cycle)
+        if (cycle == resources->nbr_cycle) {
             print_arena(resources);
+            return;
+        }
         run_all_processes(resources);
         if (cycle_checker > cycle_to_die) {
+            // if (check_live(resources) > NBR_LIVE)
+            //    cycle_to_die -= CYCLE_DELTA;
             cycle_checker = 0;
         }
         cycle_checker++;

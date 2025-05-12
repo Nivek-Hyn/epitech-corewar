@@ -17,7 +17,9 @@ void run_instruction(resources_t *resources, champion_t *champion,
                 exec_lldi, exec_lfork, exec_aff};
 
     for (int i = 0; op_tab[i].code != 0; i++) {
-        if (op_tab[i].code == process->current_instruction)
+        if (op_tab[i].code == process->current_instruction) {
+            printf("%s: %s\n", champion->name, op_tab[i].mnemonique);
             instructions[i](resources, champion, process);
+        }
     }
 }

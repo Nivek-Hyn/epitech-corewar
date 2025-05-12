@@ -18,5 +18,6 @@ int fill_champion_comment(FILE *file, champion_t *champion)
         fclose(file);
         return -1;
     }
+    fseek(file, 4, SEEK_CUR);
     return 0;
 }
