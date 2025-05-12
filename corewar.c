@@ -9,7 +9,7 @@
 
 void print_info(void)
 {
-    printf("USAGE\n./corewar [-dump nbr_cycle] "
+    mega_write(1, "USAGE\n./corewar [-dump nbr_cycle] "
         "[[-n prog_number] [-a load_address] prog_name]"
         " ...\nDESCRIPTION\n-dump nbr_cycle dumps the "
         "memory after the nbr_cycle execution (if the round "
