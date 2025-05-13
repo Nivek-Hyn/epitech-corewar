@@ -84,7 +84,7 @@ unit_tests: re
 push: fclean
 	@(find . -type f -name "#.#" -delete -o -name "*~" -delete)
 	@(git add .)
-	@(git commit -m "[FIX] Coding Style.")
+	@(git commit -m "[FIX] Fixed advancing instructions.")
 	@(git push)
 
 test: all

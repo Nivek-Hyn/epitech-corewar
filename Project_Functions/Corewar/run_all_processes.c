@@ -18,16 +18,27 @@ void set_process_waiting_cycles(process_t *process)
 void run_process(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    if (process->current_instruction != -1 && process->waiting_cycles == 0) {
-        run_instruction(resources, champion, process);
-        advance_instruction(resources, process);
+    uint8_t opcode = resources->arena[process->pc % MEM_SIZE];
+
+    //printf("Champion Name: %s, PC: %d, Opcode: %X, Prog Size: %d, Current Instruction: %s, Waiting Cycles: %d\n",
+    //    champion->name, process->pc, opcode, champion->prog_size,
+    //    instruction_info(opcode).mnemonique, process->waiting_cycles);
+    if (process->current_instruction == -1) {
+        if (opcode >= 1 && opcode <= NBR_INSTRUCTIONS) {
+            process->current_instruction = opcode;
+            set_process_waiting_cycles(process);
+        } else {
+            process->pc = (process->pc + 1) % MEM_SIZE;
+        }
+        return;
     }
-    if (process->waiting_cycles == 0) {
-        process->current_instruction = resources->arena[process->pc];
-        set_process_waiting_cycles(process);
-    } else {
+    if (process->waiting_cycles > 0) {
         process->waiting_cycles--;
+        return;
     }
+    run_instruction(resources, champion, process);
+    advance_instruction(resources, process);
+    process->current_instruction = -1;
 }
 
 void run_champion_processes(resources_t *resources, champion_t *champion)

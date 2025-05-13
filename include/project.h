@@ -88,6 +88,7 @@ uint32_t convert_big_endian_to_little_endian(uint32_t Big_Endian);
 int champions_left(resources_t *resources);
 void print_arena(resources_t *resources);
 int get_parameter_value(resources_t *resources, int pos, int size);
+const op_t instruction_info(char opcode);
 
 // Free Functions:
 void free_all(resources_t *resources);

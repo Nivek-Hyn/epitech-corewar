@@ -29,38 +29,45 @@ const op_t instruction_info(char opcode)
         if (op_tab[i].code == opcode)
             return op_tab[i];
     }
-    return op_tab[NBR_INSTRUCTIONS - 1];
+    return op_tab[NBR_INSTRUCTIONS];
 }
 
-int get_parameter_size(char coding_byte, int bit_index, int second_bit_index)
+int get_dir_size(char opcode)
 {
-    int first_bit = ((coding_byte & (1 << (8 - bit_index))) ? 1 : 0);
-    int second_bit = ((coding_byte & (1 << (8 - second_bit_index))) ? 1 : 0);
+    if (opcode == 9 || opcode == 10 || opcode == 11 ||
+        opcode == 12 || opcode == 14 || opcode == 15)
+        return DIR_SIZE / 2;
+    return DIR_SIZE;
+}
 
-    if (first_bit == 0 && second_bit == 1)
+int get_parameter_size(uint8_t coding_byte, int param_index, char opcode)
+{
+    int bits = (coding_byte >> (6 - 2 * param_index)) & 0b11;
+
+    if (bits == 0b01)
         return 1;
-    if (first_bit == 1 && second_bit == 0)
-        return DIR_SIZE;
-    if (first_bit == 1 && second_bit == 1)
-        return IND_SIZE;
+    if (bits == 0b10)
+        return get_dir_size(opcode);
+    if (bits == 0b11)
+        return 2;
     return 0;
 }
 
 void advance_instruction(resources_t *resources, process_t *process)
 {
-    int nbr_params = instruction_info(process->current_instruction).nbr_args;
+    const op_t op = instruction_info(process->current_instruction);
     int has_coding_byte =
         check_if_has_coding_byte(process->current_instruction);
     int advance = 1;
 
     if (has_coding_byte != 1) {
-        advance += DIR_SIZE;
+        advance += get_dir_size(process->current_instruction);
     } else {
         advance++;
-        for (int i = 1; i < nbr_params * 2; i += 2) {
-            advance += get_parameter_size(
-                resources->arena[process->pc] + 1, i, i + 1);
+        for (int i = 0; i < op.nbr_args; i++) {
+            advance += get_parameter_size(resources->arena[(process->pc + 1)
+                % MEM_SIZE], i, process->current_instruction);
         }
     }
-    process->pc += advance;
+    process->pc = (process->pc + advance) % MEM_SIZE;
 }

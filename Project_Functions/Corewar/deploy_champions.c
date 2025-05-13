@@ -11,6 +11,7 @@ void set_spawn_to_load_address(resources_t *resources, champion_t *champion)
 {
     int arena_pos = 0;
 
+    champion->processes->pc = champion->load_address;
     for (int i = 0; i < champion->prog_size; i++) {
         arena_pos = (champion->load_address + i) % MEM_SIZE;
         resources->arena[arena_pos] = champion->code[i];
@@ -71,6 +72,7 @@ static void set_spawn_to_farthest(resources_t *resources, champion_t *champion)
     int optimal_pos = find_optimal_position(resources);
 
     champion->load_address = optimal_pos;
+    champion->processes->pc = champion->load_address;
     set_spawn_to_load_address(resources, champion);
 }
 

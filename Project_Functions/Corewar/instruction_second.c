@@ -45,7 +45,7 @@ void exec_add(resources_t *resources, champion_t *champion,
         process->registers[first_register_index - 1] +
             process->registers[second_register_index - 1];
     process->carry =
-        (process->registers[third_register_index - 1] == 0) ? 1 : 0;
+        (process->registers[third_register_index - 1] == 0) ? true : false;
 }
 
 void exec_sub(resources_t *resources, champion_t *champion,
@@ -66,7 +66,7 @@ void exec_sub(resources_t *resources, champion_t *champion,
         process->registers[first_register_index - 1] -
             process->registers[second_register_index - 1];
     process->carry =
-        (process->registers[third_register_index - 1] == 0) ? 1 : 0;
+        (process->registers[third_register_index - 1] == 0) ? true : false;
 }
 
 void exec_and(resources_t *resources, champion_t *champion,
@@ -87,7 +87,7 @@ void exec_and(resources_t *resources, champion_t *champion,
         process->registers[first_register_index - 1] &
             process->registers[second_register_index - 1];
     process->carry =
-        (process->registers[third_register_index - 1] == 0) ? 1 : 0;
+        (process->registers[third_register_index - 1] == 0) ? true : false;
 }
 
 void exec_or(resources_t *resources, champion_t *champion,
@@ -108,5 +108,5 @@ void exec_or(resources_t *resources, champion_t *champion,
         process->registers[first_register_index - 1] |
             process->registers[second_register_index - 1];
     process->carry =
-        (process->registers[third_register_index - 1] == 0) ? 1 : 0;
+        (process->registers[third_register_index - 1] == 0) ? true : false;
 }

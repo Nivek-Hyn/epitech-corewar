@@ -20,13 +20,9 @@ uint32_t get_bytes_live(int pc, char *arena)
 void exec_live(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    uint32_t number = get_bytes_live(process->pc + 1, resources->arena);
-
-    if (number == champion->prog_number) {
-        process->alive = 1;
-        mega_write(1, "The player %d(%s) is alive.\n",
-            champion->prog_number, champion->name);
-    }
+    process->alive = 1;
+    mega_write(1, "The player %d(%s) is alive.\n",
+        champion->prog_number, champion->name);
 }
 
 void exec_ld_two(int reg, int value,
@@ -35,7 +31,7 @@ void exec_ld_two(int reg, int value,
     if (reg < 1 || reg > REG_NUMBER)
         return;
     process->registers[reg - 1] = value;
-    process->carry = (value == 0) ? 1 : 0;
+    process->carry = (value == 0) ? true : false;
 }
 
 void exec_ld(resources_t *resources, champion_t *champion,

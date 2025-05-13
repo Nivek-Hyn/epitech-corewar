@@ -25,7 +25,7 @@ void exec_xor(resources_t *resources, champion_t *champion,
         process->registers[first_register_index - 1] ^
             process->registers[second_register_index - 1];
     process->carry =
-        (process->registers[third_register_index - 1] == 0) ? 1 : 0;
+        (process->registers[third_register_index - 1] == 0) ? true : false;
 }
 
 void exec_zjmp(resources_t *resources, champion_t *champion,
@@ -34,7 +34,7 @@ void exec_zjmp(resources_t *resources, champion_t *champion,
     short index =
         (short)get_parameter_value(resources, (process->pc + 1) % MEM_SIZE, 2);
 
-    if (process->carry == 1)
+    if (process->carry == true)
         process->pc = (process->pc + index % IDX_MOD) % MEM_SIZE;
 }
 
@@ -119,8 +119,8 @@ void exec_fork(resources_t *resources, champion_t *champion,
         current = current->next;
     current->alive = process->alive;
     current->carry = process->carry;
-    current->waiting_cycles = process->waiting_cycles;
-    current->current_instruction = process->current_instruction;
+    current->waiting_cycles = 1;
+    current->current_instruction = -1;
     for (int i = 0; i < REG_NUMBER; i++)
         current->registers[i] = process->registers[i];
     current->pc = (current->pc + index % IDX_MOD) % MEM_SIZE;

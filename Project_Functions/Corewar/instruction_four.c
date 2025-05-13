@@ -12,7 +12,7 @@ void exec_ldi_write(int reg, int value, process_t *process)
     if (reg < 1 || reg > REG_NUMBER)
         return;
     process->registers[reg - 1] = value;
-    process->carry = (value == 0) ? 1 : 0;
+    process->carry = (value == 0) ? true : false;
 }
 
 int get_value(uint8_t type, int pc_offset,
@@ -78,8 +78,9 @@ void exec_ldi(resources_t *resources, champion_t *champion, process_t *process)
 void exec_lfork(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    short index =
-        (short)get_parameter_value(resources, (process->pc + 1) % MEM_SIZE, 2);
+    unsigned short index =
+        (unsigned short)get_parameter_value(resources,
+            (process->pc + 1) % MEM_SIZE, 2);
     process_t *current = champion->processes;
 
     champion->processes = create_process(champion->processes);
@@ -87,8 +88,8 @@ void exec_lfork(resources_t *resources, champion_t *champion,
         current = current->next;
     current->alive = process->alive;
     current->carry = process->carry;
-    current->waiting_cycles = process->waiting_cycles;
-    current->current_instruction = process->current_instruction;
+    current->waiting_cycles = 1;
+    current->current_instruction = -1;
     for (int i = 0; i < REG_NUMBER; i++)
         current->registers[i] = process->registers[i];
     current->pc = (current->pc + index) % MEM_SIZE;

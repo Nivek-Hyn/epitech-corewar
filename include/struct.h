@@ -19,7 +19,7 @@ typedef struct flags {
 typedef struct process_s {
     int alive;
     int registers[REG_NUMBER];
-    int carry;
+    bool carry;
     int pc;
     int waiting_cycles;
     char current_instruction;
@@ -41,7 +41,7 @@ typedef struct resources_s {
     int nb_champion;
     flags_t *flags;
     int nbr_cycle;
-    char arena[MEM_SIZE];
+    uint8_t arena[MEM_SIZE];
     int owner[MEM_SIZE];
 } resources_t;
 
