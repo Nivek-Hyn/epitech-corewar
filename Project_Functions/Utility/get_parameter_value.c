@@ -12,8 +12,8 @@ int get_parameter_value(resources_t *resources, int pos, int size)
     int value = 0;
 
     for (int i = 0; i < size; i++) {
-        value = (value << 8) | (unsigned char)resources->arena[pos + i]
-            % MEM_SIZE;
+        value = (value << 8) |
+            (unsigned char)resources->arena[(pos + i) % MEM_SIZE];
     }
     return value;
 }

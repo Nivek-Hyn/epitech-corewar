@@ -10,11 +10,11 @@
 void exec_xor(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    int first_register_index =
+    unsigned int first_register_index =
         get_parameter_value(resources, (process->pc + 2) % MEM_SIZE, 1);
-    int second_register_index =
+    unsigned int second_register_index =
         get_parameter_value(resources, (process->pc + 3) % MEM_SIZE, 1);
-    int third_register_index =
+    unsigned int third_register_index =
         get_parameter_value(resources, (process->pc + 4) % MEM_SIZE, 1);
 
     if (first_register_index < 1 || first_register_index > REG_NUMBER ||
@@ -31,8 +31,9 @@ void exec_xor(resources_t *resources, champion_t *champion,
 void exec_zjmp(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    short index =
-        (short)get_parameter_value(resources, (process->pc + 1) % MEM_SIZE, 2);
+    unsigned short index =
+        (unsigned short)get_parameter_value(
+            resources, (process->pc + 1) % MEM_SIZE, 2);
 
     if (process->carry == true)
         process->pc = (process->pc + index % IDX_MOD) % MEM_SIZE;
@@ -110,8 +111,8 @@ void exec_sti(resources_t *resources, champion_t *champion,
 void exec_fork(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    short index =
-        (short)get_parameter_value(resources, (process->pc + 1) % MEM_SIZE, 2);
+    unsigned short index =
+        (unsigned short)get_parameter_value(resources, (process->pc + 1) % MEM_SIZE, 2);
     process_t *current = champion->processes;
 
     champion->processes = create_process(champion->processes);
@@ -132,9 +133,9 @@ void exec_lld(resources_t *resources, champion_t *champion,
     uint8_t coding_byte = resources->arena[(process->pc + 1) % MEM_SIZE];
     uint8_t type1 = (coding_byte >> 6) & 0b11;
     uint8_t type2 = (coding_byte >> 4) & 0b11;
-    int32_t value = 0;
+    uint32_t value = 0;
     int reg = 0;
-    int offset = 0;
+    unsigned int offset = 0;
 
     if (!((type1 == 0b10 || type1 == 0b11) && type2 == 0b01))
         return;

@@ -40,9 +40,9 @@ void exec_ld(resources_t *resources, champion_t *champion,
     uint8_t coding_byte = resources->arena[(process->pc + 1) % MEM_SIZE];
     uint8_t type1 = (coding_byte >> 6) & 0b11;
     uint8_t type2 = (coding_byte >> 4) & 0b11;
-    int32_t value = 0;
+    uint32_t value = 0;
     int reg = 0;
-    int offset = 0;
+    unsigned int offset = 0;
 
     if (!((type1 == 0b10 || type1 == 0b11) && type2 == 0b01))
         return;

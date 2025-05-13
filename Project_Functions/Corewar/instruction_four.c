@@ -18,7 +18,7 @@ void exec_ldi_write(int reg, int value, process_t *process)
 int get_value(uint8_t type, int pc_offset,
     process_t *process, resources_t *resources)
 {
-    int value;
+    unsigned int value;
     int reg;
 
     if (type == 0b01) {
@@ -64,7 +64,7 @@ void exec_ldi(resources_t *resources, champion_t *champion, process_t *process)
 {
     ldi_params_t params;
     int addr;
-    int result;
+    unsigned int result;
 
     if (extract_ldi_params(resources, process, &params) == -1)
         return;

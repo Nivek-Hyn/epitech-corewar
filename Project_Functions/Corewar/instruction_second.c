@@ -30,11 +30,11 @@ void exec_st(resources_t *resources, champion_t *champion,
 void exec_add(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    int first_register_index =
+    unsigned int first_register_index =
         get_parameter_value(resources, (process->pc + 2) % MEM_SIZE, 1);
-    int second_register_index =
+    unsigned int second_register_index =
         get_parameter_value(resources, (process->pc + 3) % MEM_SIZE, 1);
-    int third_register_index =
+    unsigned int third_register_index =
         get_parameter_value(resources, (process->pc + 4) % MEM_SIZE, 1);
 
     if (first_register_index < 1 || first_register_index > REG_NUMBER ||
@@ -51,11 +51,11 @@ void exec_add(resources_t *resources, champion_t *champion,
 void exec_sub(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    int first_register_index =
+    unsigned int first_register_index =
         get_parameter_value(resources, (process->pc + 2) % MEM_SIZE, 1);
-    int second_register_index =
+    unsigned int second_register_index =
         get_parameter_value(resources, (process->pc + 3) % MEM_SIZE, 1);
-    int third_register_index =
+    unsigned int third_register_index =
         get_parameter_value(resources, (process->pc + 4) % MEM_SIZE, 1);
 
     if (first_register_index < 1 || first_register_index > REG_NUMBER ||
@@ -72,11 +72,11 @@ void exec_sub(resources_t *resources, champion_t *champion,
 void exec_and(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    int first_register_index =
+    unsigned int first_register_index =
         get_parameter_value(resources, (process->pc + 2) % MEM_SIZE, 1);
-    int second_register_index =
+    unsigned int second_register_index =
         get_parameter_value(resources, (process->pc + 3) % MEM_SIZE, 1);
-    int third_register_index =
+    unsigned int third_register_index =
         get_parameter_value(resources, (process->pc + 4) % MEM_SIZE, 1);
 
     if (first_register_index < 1 || first_register_index > REG_NUMBER ||
@@ -93,11 +93,11 @@ void exec_and(resources_t *resources, champion_t *champion,
 void exec_or(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    int first_register_index =
+    unsigned int first_register_index =
         get_parameter_value(resources, (process->pc + 2) % MEM_SIZE, 1);
-    int second_register_index =
+    unsigned int second_register_index =
         get_parameter_value(resources, (process->pc + 3) % MEM_SIZE, 1);
-    int third_register_index =
+    unsigned int third_register_index =
         get_parameter_value(resources, (process->pc + 4) % MEM_SIZE, 1);
 
     if (first_register_index < 1 || first_register_index > REG_NUMBER ||

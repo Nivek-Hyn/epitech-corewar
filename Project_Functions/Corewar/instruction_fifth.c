@@ -12,7 +12,7 @@ void exec_lldi(resources_t *resources, champion_t *champion,
 {
     ldi_params_t params;
     int addr;
-    int result;
+    unsigned int result;
 
     if (extract_ldi_params(resources, process, &params) == -1)
         return;
