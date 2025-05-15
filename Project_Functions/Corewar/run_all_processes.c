@@ -20,13 +20,11 @@ void run_process(resources_t *resources, champion_t *champion,
 {
     uint8_t opcode = resources->arena[process->pc % MEM_SIZE];
 
-    //printf("Champion Name: %s, PC: %d, Opcode: %X, Prog Size: %d, Current Instruction: %s, Waiting Cycles: %d\n",
-    //    champion->name, process->pc, opcode, champion->prog_size,
-    //    instruction_info(opcode).mnemonique, process->waiting_cycles);
     if (process->current_instruction == -1) {
         if (opcode >= 1 && opcode <= NBR_INSTRUCTIONS) {
             process->current_instruction = opcode;
             set_process_waiting_cycles(process);
+            process->waiting_cycles--;
         } else {
             process->pc = (process->pc + 1) % MEM_SIZE;
         }
@@ -46,7 +44,8 @@ void run_champion_processes(resources_t *resources, champion_t *champion)
     process_t *current = champion->processes;
 
     while (current) {
-        run_process(resources, champion, current);
+        if (current->alive == 1)
+            run_process(resources, champion, current);
         current = current->next;
     }
 }

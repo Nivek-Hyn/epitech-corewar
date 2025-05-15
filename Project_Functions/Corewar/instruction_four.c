@@ -72,7 +72,6 @@ void exec_ldi(resources_t *resources, champion_t *champion, process_t *process)
         (params.value + params.offset) % IDX_MOD)) % MEM_SIZE;
     result = get_parameter_value(resources, addr, 4);
     exec_ldi_write(params.reg, result, process);
-    process->pc = (process->pc + params.pc_offset) % MEM_SIZE;
 }
 
 void exec_lfork(resources_t *resources, champion_t *champion,

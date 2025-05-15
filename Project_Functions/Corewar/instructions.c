@@ -23,6 +23,8 @@ void exec_live(resources_t *resources, champion_t *champion,
     process->alive = 1;
     mega_write(1, "The player %d(%s) is alive.\n",
         champion->prog_number, champion->name);
+    process->live = true;
+    resources->total_lives++;
 }
 
 void exec_ld_two(int reg, int value,
@@ -49,12 +51,10 @@ void exec_ld(resources_t *resources, champion_t *champion,
     if (type1 == 0b10) {
         value = get_bytes_live((process->pc + 2) % MEM_SIZE, resources->arena);
         reg = resources->arena[(process->pc + 6) % MEM_SIZE];
-        process->pc = (process->pc + 7) % MEM_SIZE;
     } else {
         offset = get_parameter_value(resources, FORMULA_OFFSET);
         value = get_parameter_value(resources, FORMULA_VALUE);
         reg = resources->arena[(process->pc + 4) % MEM_SIZE];
-        process->pc = (process->pc + 5) % MEM_SIZE;
     }
     exec_ld_two(reg, value, resources, process);
 }
@@ -66,7 +66,6 @@ void st_checking(resources_t *resources,
         p->reg_final = resources->arena[(process->pc + 3) % MEM_SIZE];
         if (p->reg_final >= 1 && p->reg_final <= REG_NUMBER)
             process->registers[p->reg_final - 1] = p->value;
-        process->pc = ((process->pc + 4) % MEM_SIZE);
     } else {
         p->offset = get_parameter_value(resources,
             (process->pc + 3) % MEM_SIZE, 2);
@@ -77,6 +76,5 @@ void st_checking(resources_t *resources,
             resources->owner[(p->addr_final + i) % MEM_SIZE] =
                 champion->prog_number;
         }
-        process->pc = (process->pc + 5) % MEM_SIZE;
     }
 }

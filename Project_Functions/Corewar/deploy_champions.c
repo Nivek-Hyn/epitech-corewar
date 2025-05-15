@@ -105,8 +105,5 @@ void deploy_champions(resources_t *resources)
         if (resources->champion_list[i]->load_address == -1) {
             set_spawn_to_farthest(resources, resources->champion_list[i]);
         }
-        if (resources->champion_list[i]->prog_number == -1) {
-            set_prog_number(resources, resources->champion_list[i]);
-        }
     }
 }

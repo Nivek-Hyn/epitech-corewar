@@ -23,6 +23,7 @@ typedef struct process_s {
     int pc;
     int waiting_cycles;
     char current_instruction;
+    bool live;
     struct process_s *next;
 } process_t;
 
@@ -41,6 +42,7 @@ typedef struct resources_s {
     int nb_champion;
     flags_t *flags;
     int nbr_cycle;
+    int total_lives;
     uint8_t arena[MEM_SIZE];
     int owner[MEM_SIZE];
 } resources_t;

@@ -46,6 +46,9 @@ static void sti_write(resources_t *resources,
         resources->arena[(addr + i) % MEM_SIZE] = (val >> (24 - i * 8)) & 0xFF;
         resources->owner[(addr + i) % MEM_SIZE] = champion->prog_number;
     }
+    printf("STI: %d\n", val);
+    printf("STI addr: %d\n", addr);
+    printf("STI Hexa: %X\n", val);
 }
 
 static void sti_final(resources_t *resources, process_t *process,
@@ -65,7 +68,6 @@ static void sti_final(resources_t *resources, process_t *process,
         p.value2 += get_parameter_value(resources, pc % MEM_SIZE, 2);
         pc = (pc + 2) % MEM_SIZE;
     }
-    process->pc = pc;
     sti_write(resources, (pc +
         (p.value2 % IDX_MOD)) % MEM_SIZE, val, p.champion);
 }
@@ -79,7 +81,7 @@ static void sti_exec(resources_t *resources, process_t *process,
     int pc = process->pc;
     uint8_t t2 = (cb >> 4) & 0b11;
     uint8_t t3 = (cb >> 2) & 0b11;
-    int r2;
+    unsigned int r2;
 
     if (t2 == 0b01) {
         r2 = resources->arena[(pc + 3) % MEM_SIZE];
@@ -99,8 +101,9 @@ void exec_sti(resources_t *resources, champion_t *champion,
 {
     uint8_t cb = resources->arena[(process->pc + 1) % MEM_SIZE];
     int reg = resources->arena[(process->pc + 2) % MEM_SIZE];
-    int groups[1];
+    int groups[2];
 
+    printf("Champion: %s\n", champion->name);
     if (((cb >> 6) & 0b11) != 0b01 || reg < 1 || reg > REG_NUMBER)
         return;
     groups[0] = reg;
@@ -111,8 +114,8 @@ void exec_sti(resources_t *resources, champion_t *champion,
 void exec_fork(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    unsigned short index =
-        (unsigned short)get_parameter_value(resources, (process->pc + 1) % MEM_SIZE, 2);
+    unsigned short index = (unsigned short)get_parameter_value(resources,
+        (process->pc + 1) % MEM_SIZE, 2);
     process_t *current = champion->processes;
 
     champion->processes = create_process(champion->processes);
@@ -142,12 +145,10 @@ void exec_lld(resources_t *resources, champion_t *champion,
     if (type1 == 0b10) {
         value = get_bytes_live((process->pc + 2) % MEM_SIZE, resources->arena);
         reg = resources->arena[(process->pc + 6) % MEM_SIZE];
-        process->pc = (process->pc + 7) % MEM_SIZE;
     } else {
         offset = get_parameter_value(resources, FORMULA_OFFSET);
         value = get_parameter_value(resources, FORMULA_SECOND);
         reg = resources->arena[(process->pc + 4) % MEM_SIZE];
-        process->pc = (process->pc + 5) % MEM_SIZE;
     }
     exec_ld_two(reg, value, resources, process);
 }

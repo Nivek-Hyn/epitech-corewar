@@ -19,7 +19,6 @@ void exec_lldi(resources_t *resources, champion_t *champion,
     addr = (process->pc + ((params.value + params.offset))) % MEM_SIZE;
     result = get_parameter_value(resources, addr, 4);
     exec_ldi_write(params.reg, result, process);
-    process->pc = (process->pc + params.pc_offset) % MEM_SIZE;
 }
 
 void exec_aff(resources_t *resources, champion_t *champion,
@@ -38,5 +37,4 @@ void exec_aff(resources_t *resources, champion_t *champion,
         return;
     value = process->registers[reg - 1];
     mega_write(1, "%c", value % 256);
-    process->pc = (process->pc + 3) % MEM_SIZE;
 }
