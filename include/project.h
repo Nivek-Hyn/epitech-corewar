@@ -23,6 +23,7 @@ void run_corewar(resources_t *resources);
 void run_instruction(resources_t *resources, champion_t *champion,
     process_t *process);
 void advance_instruction(resources_t *resources, process_t *process);
+champion_t *find_winning_champion(resources_t *resources);
 
 // Initializations:
 int initialize_resources(resources_t *resources);
