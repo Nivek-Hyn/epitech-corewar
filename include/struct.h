@@ -24,6 +24,7 @@ typedef struct process_s {
     int waiting_cycles;
     char current_instruction;
     bool live;
+    bool forked;
     struct process_s *next;
 } process_t;
 

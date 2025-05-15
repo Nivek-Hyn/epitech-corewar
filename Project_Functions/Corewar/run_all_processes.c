@@ -44,6 +44,10 @@ void run_champion_processes(resources_t *resources, champion_t *champion)
     process_t *current = champion->processes;
 
     while (current) {
+        if (current->forked == true) {
+            current->forked = false;
+            continue;
+        }
         if (current->alive == 1)
             run_process(resources, champion, current);
         current = current->next;

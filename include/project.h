@@ -77,17 +77,12 @@ void exec_aff(resources_t *resources, champion_t *champion,
 int extract_ldi_params(resources_t *resources,
     process_t *process, ldi_params_t *params);
 void exec_ldi_write(int reg, int value, process_t *process);
-void st_checking(resources_t *resources,
-    process_t *process, champion_t *champion, st_params_t *p);
-uint32_t get_bytes_live(int pc, char *arena);
-void exec_ld_two(int reg, int value,
-    resources_t *resources, process_t *process);
 
 // Utility:
 uint32_t convert_big_endian_to_little_endian(uint32_t Big_Endian);
 int champions_left(resources_t *resources);
 void print_arena(resources_t *resources);
-int get_parameter_value(resources_t *resources, int pos, int size);
+unsigned int get_parameter_value(resources_t *resources, int pos, int size);
 const op_t instruction_info(char opcode);
 
 // Free Functions:

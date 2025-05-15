@@ -15,10 +15,4 @@
         "type_traits": "c",
         "utility": "c"
     },
-    "github.copilot.enable": {
-        "*": true,
-        "plaintext": false,
-        "markdown": false,
-        "scminput": false
-    }
 }
