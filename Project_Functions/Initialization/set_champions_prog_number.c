@@ -18,7 +18,7 @@ int prog_number_exists(champion_t **champion_list, int prog_number)
 
 int get_lowest_unoccupied_prog_number(champion_t **champion_list)
 {
-    int result = 0;
+    int result = 1;
 
     while (prog_number_exists(champion_list, result) == 1)
         result++;

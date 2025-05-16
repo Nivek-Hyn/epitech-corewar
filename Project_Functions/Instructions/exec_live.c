@@ -10,8 +10,11 @@
 void exec_live(resources_t *resources, champion_t *champion,
     process_t *process)
 {
+    unsigned int prog_number = (unsigned int)get_parameter_value(
+        resources, (process->pc + 1) % MEM_SIZE, 4);
+
     process->alive = 1;
-    mega_write(1, "The player %d (%s) is alive.\n",
+    mega_write(1, "The player %d(%s) is alive.\n",
         champion->prog_number, champion->name);
     process->live = true;
     resources->total_lives++;
