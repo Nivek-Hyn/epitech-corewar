@@ -87,7 +87,7 @@ unit_tests: re
 push: fclean
 	@(find . -type f -name "#.#" -delete -o -name "*~" -delete)
 	@(git add .)
-	@(git commit -m "[ADD] test unitaire / test banned ffunction")
+	@(git commit -m "[ADD] test unitaire")
 	@(git push)
 
 test: all
