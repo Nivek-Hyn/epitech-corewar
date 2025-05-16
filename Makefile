@@ -87,7 +87,7 @@ unit_tests: re
 push: fclean
 	@(find . -type f -name "#.#" -delete -o -name "*~" -delete)
 	@(git add .)
-	@(git commit -m "[FIX] Fixed game to finish one day")
+	@(git commit -m "[ADD] test unitaire / test banned ffunction")
 	@(git push)
 
 test: all
