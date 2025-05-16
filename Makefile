@@ -55,6 +55,9 @@ clean:
 
 fclean: clean
 	rm -f $(BASIC_LIB) $(PROJECT_LIB) $(PROG_NAME)
+	rm -f *.gcda
+	rm -f *.gcno
+	cd tests; rm -f unit_tests
 
 re: fclean all
 
@@ -77,14 +80,14 @@ valgrind: re
 	--log-file=valgrind.log ./$(PROG_NAME)
 
 unit_tests: re
-	gcc -o unit_tests tests/*.c -I$(INCLUDE_DIR) -L$(LIB_DIR) -lproject \
+	gcc -o unit_tests tests/*.c -I $(INCLUDE_DIR) -L $(LIB_DIR) -lcorewar \
 	-g3 --coverage -lcriterion
 	mv unit_tests tests/
 
 push: fclean
 	@(find . -type f -name "#.#" -delete -o -name "*~" -delete)
 	@(git add .)
-	@(git commit -m "[FIX] Fixed advancing instructions.")
+	@(git commit -m "[FIX] Fixed game to finish one day")
 	@(git push)
 
 test: all

@@ -51,7 +51,6 @@ void run_corewar(resources_t *resources)
     for (int cycle = 0; champions_left(resources) > 1; cycle++) {
         if (cycle == resources->nbr_cycle) {
             print_arena(resources);
-            return;
         }
         run_all_processes(resources);
         cycles_and_lives_manager(resources, &cycle_to_die, &cycle_checker);
