@@ -7,14 +7,6 @@
 
 #include "project.h"
 
-/*
-./corewar -dump 100
--n 1 -a 70 test_champions/abel.cor
--n 2 test_champions/bill.cor
--n 3 test_champions/pdd.cor
--n 4 test_champions/tyron.cor
-*/
-
 void print_info(void)
 {
     mega_write(1, "USAGE\n./corewar [-dump nbr_cycle] "

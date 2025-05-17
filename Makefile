@@ -55,9 +55,11 @@ clean:
 
 fclean: clean
 	rm -f $(BASIC_LIB) $(PROJECT_LIB) $(PROG_NAME)
-	rm -f *.gcda
-	rm -f *.gcno
-	cd tests; rm -f unit_tests
+	@cd Lib; rm -f *.a
+	@rm -f *.gcda
+	@rm -f *.gcno
+	@cd tests; rm -f unit_tests
+	@rm -f $(BONUS_BIN)
 
 re: fclean all
 
@@ -90,4 +92,25 @@ push: fclean
 	@(git commit -m "[ADD] test unitaire")
 	@(git push)
 
-test: all
+BONUS_DIR = bonus
+BONUS_SRC_DIRS = $(wildcard $(BONUS_DIR)/**/*.c $(BONUS_DIR)/*.c)
+BONUS_OBJ = $(patsubst $(BONUS_DIR)/%.c,\
+	$(OBJ_DIR)/$(BONUS_DIR)/%.o, $(BONUS_SRC_DIRS))
+
+BONUS_LIB = $(LIB_DIR)/libcorewar_bonus.a
+BONUS_BIN = corewar_bonus
+BONUS_MAIN = $(OBJ_DIR)/$(BONUS_DIR)/corewar.o
+
+$(OBJ_DIR)/$(BONUS_DIR)/%.o: $(BONUS_DIR)/%.c
+	@mkdir -p $(dir $@)
+	gcc $(FLAGS) -c $< -o $@
+
+$(BONUS_LIB): $(BONUS_OBJ)
+	@mkdir -p $(LIB_DIR)
+	ar rc $@ $^
+
+$(BONUS_BIN): $(BONUS_LIB) $(PROJECT_LIB) $(BASIC_LIB) $(BONUS_MAIN)
+	gcc -o $@ $(BONUS_MAIN) -I$(INCLUDE_DIR) -L$(LIB_DIR) \
+		-lcorewar_bonus -lcorewar -lmy -lncurses -g3
+
+bonus: all $(BONUS_BIN)
