@@ -110,5 +110,8 @@ void show_menu(graphical_t *graphical);
 void print_arena_ncurses(resources_t *resources, graphical_t *graphical);
 void initialize_color_code(resources_t *resources, graphical_t *graphical);
 void set_color(graphical_t *graphical, int owner, int *color_pair);
+void print_info_graphical(graphical_t *graphical, resources_t *resources);
+void print_params_graphical(graphical_t *graphical, resources_t *resources);
+void print_help_graphical(graphical_t *graphical);
 
 #endif

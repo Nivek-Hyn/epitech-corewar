@@ -7,7 +7,8 @@
 
 #include "project.h"
 
-int check_flags_two(resources_t *resources, int argc, char **argv, int i)
+static int check_flags_three(resources_t *resources,
+    int argc, char **argv, int i)
 {
     if (my_strcmp(&argv[i][1], "a") == 0) {
         resources->flags->a++;
@@ -15,30 +16,42 @@ int check_flags_two(resources_t *resources, int argc, char **argv, int i)
             return -1;
         if (argc <= i + 1)
             return -1;
+        if (argc > i + 1 && my_strlen(argv[i + 1]) > 9)
+            return -1;
         if (argc > i + 1)
             resources->flags->load_address = my_atoi(argv[i + 1]);
     }
     return 0;
 }
 
-int check_flags(resources_t *resources, int argc, char **argv, int i)
+static int check_flags_two(resources_t *resources,
+    int argc, char **argv, int i)
 {
-    if (my_strcmp(&argv[i][1], "dump") == 0) {
-        resources->flags->dump++;
-        if (argc > i + 1) {
-            resources->nbr_cycle = my_atoi(argv[i + 1]);
-        } else {
-            return -1;
-        }
-    }
     if (my_strcmp(&argv[i][1], "n") == 0) {
         resources->flags->n++;
         if (argc > i + 1 && !is_number(argv[i + 1]))
             return -1;
         if (argc <= i + 1)
             return -1;
+        if (argc > i + 1 && my_strlen(argv[i + 1]) > 9)
+            return -1;
         if (argc > i + 1)
             resources->flags->prog_number = my_atoi(argv[i + 1]);
+    }
+    return check_flags_three(resources, argc, argv, i);
+}
+
+int check_flags(resources_t *resources, int argc, char **argv, int i)
+{
+    if (my_strcmp(&argv[i][1], "dump") == 0) {
+        resources->flags->dump++;
+        if (argc > i + 1 && my_strlen(argv[i + 1]) > 9)
+            return -1;
+        if (argc > i + 1) {
+            resources->nbr_cycle = my_atoi(argv[i + 1]);
+        } else {
+            return -1;
+        }
     }
     return check_flags_two(resources, argc, argv, i);
 }
