@@ -11,6 +11,9 @@
 void game_manager(graphical_t *graphical)
 {
     wtimeout(graphical->arena_win, graphical->timeout_value);
+    wtimeout(graphical->info_win, 0);
+    wtimeout(graphical->params_win, 0);
+    wtimeout(graphical->help_win, 0);
     graphical->c = wgetch(graphical->arena_win);
 }
 

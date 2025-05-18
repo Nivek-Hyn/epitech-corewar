@@ -8,6 +8,7 @@
 #include "project.h"
 
 /* ./corewar -dump 10000 -n 1 -a 70 test_champions/abel.cor -n 2 test_champions/bill.cor -n 3 test_champions/pdd.cor -n 4 test_champions/tyron.cor */
+/* ./corewar -dump 1000 -a 50 test_champions/abel.cor -a 300 test_champions/bill.cor -a 550 test_champions/pdd.cor -a 800 test_champions/tyron.cor -a 1050 test_champions/pdd.cor -a 1300 test_champions/pdd.cor -a 1550 test_champions/pdd.cor */
 
 void print_info(void)
 {
