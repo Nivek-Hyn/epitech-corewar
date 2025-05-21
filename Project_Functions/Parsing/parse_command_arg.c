@@ -16,7 +16,8 @@ static int check_flags_three(resources_t *resources,
             return -1;
         if (argc <= i + 1)
             return -1;
-        if (argc > i + 1 && my_strlen(argv[i + 1]) > 9)
+        if (argc > i + 1 && my_strlen(argv[i + 1]) > 9
+            || argv[i + 1][0] == '-')
             return -1;
         if (argc > i + 1)
             resources->flags->load_address = my_atoi(argv[i + 1]);
@@ -33,7 +34,8 @@ static int check_flags_two(resources_t *resources,
             return -1;
         if (argc <= i + 1)
             return -1;
-        if (argc > i + 1 && my_strlen(argv[i + 1]) > 9)
+        if (argc > i + 1 && my_strlen(argv[i + 1]) > 9
+            || argv[i + 1][0] == '-')
             return -1;
         if (argc > i + 1)
             resources->flags->prog_number = my_atoi(argv[i + 1]);
@@ -45,7 +47,8 @@ int check_flags(resources_t *resources, int argc, char **argv, int i)
 {
     if (my_strcmp(&argv[i][1], "dump") == 0) {
         resources->flags->dump++;
-        if (argc > i + 1 && my_strlen(argv[i + 1]) > 9)
+        if (argc > i + 1 && my_strlen(argv[i + 1]) > 9
+            || argv[i + 1][0] == '-')
             return -1;
         if (argc > i + 1) {
             resources->nbr_cycle = my_atoi(argv[i + 1]);

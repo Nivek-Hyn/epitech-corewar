@@ -89,7 +89,7 @@ unit_tests: re
 push: fclean
 	@(find . -type f -name "#.#" -delete -o -name "*~" -delete)
 	@(git add .)
-	@(git commit -m "[ADD] test unitaire")
+	@(git commit -m "[FIX] handling negatif number")
 	@(git push)
 
 BONUS_DIR = bonus
