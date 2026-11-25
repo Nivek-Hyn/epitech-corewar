@@ -2,6 +2,8 @@
 
 A virtual machine for Corewar, written in C. Compiled champion programs (`.cor` files) are loaded into a shared circular memory of 6 KB and executed cycle by cycle; each champion tries to stay alive by calling `live` while overwriting the others. The last champion with living processes wins. A bonus build shows the arena live in the terminal with ncurses.
 
+The assembler that compiles champions into `.cor` files was a separate project (Robot Factory) and is not part of this repository.
+
 ## Features
 
 - Loads any number of champions from `.cor` files: checks the magic number, reads the name, comment, program size and code.
