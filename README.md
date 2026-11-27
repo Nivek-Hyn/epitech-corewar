@@ -2,6 +2,12 @@
 
 A virtual machine for Corewar, written in C. Compiled champion programs (`.cor` files) are loaded into a shared circular memory of 6 KB and executed cycle by cycle; each champion tries to stay alive by calling `live` while overwriting the others. The last champion with living processes wins. A bonus build shows the arena live in the terminal with ncurses.
 
+![The ncurses view: four champions fight in the shared memory, each byte coloured by the champion that wrote it](docs/media/corewar-demo.gif)
+
+**C · ncurses · Criterion · Make**
+
+Epitech project, built in a pair.
+
 The assembler that compiles champions into `.cor` files was a separate project (Robot Factory) and is not part of this repository.
 
 ## Features
@@ -59,4 +65,6 @@ Unit tests use Criterion: `make unit_tests` builds `tests/unit_tests`.
 
 ## Team
 
-Epitech school project, built in a pair. My part was the virtual machine: loading champions, the cycle loop, every instruction, the live checks and the ncurses view.
+Kevin Huynh ([@Nivek-Hyn](https://github.com/Nivek-Hyn)) and Hatim Ouaadi.
+
+My part was the virtual machine: loading champions, the cycle loop, every instruction, the live checks and the ncurses view.
