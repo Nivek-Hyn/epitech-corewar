@@ -2,7 +2,7 @@
 
 A virtual machine for Corewar, written in C. Compiled champion programs (`.cor` files) are loaded into a shared circular memory of 6 KB and executed cycle by cycle; each champion tries to stay alive by calling `live` while overwriting the others. The last champion with living processes wins. A bonus build shows the arena live in the terminal with ncurses.
 
-![The ncurses view: four champions fight in the shared memory, each byte coloured by the champion that wrote it](docs/media/corewar-demo.gif)
+![The ncurses view: the four sample champions loaded close together, each in its own colour (red, green, yellow, blue), while the cycles run](docs/media/corewar-demo.gif)
 
 **C · ncurses · Criterion · Make**
 
@@ -49,6 +49,13 @@ The ncurses view takes the same arguments and must be run from the repository ro
 ./corewar_bonus test_champions/abel.cor test_champions/bill.cor
 ```
 
+The recording above places the four champions close together so they fit on one screen (`-dump` has to come first when `-n` or `-a` are used; the ncurses view ignores its value):
+
+```sh
+./corewar_bonus -dump 999999 -n 1 -a 0 test_champions/abel.cor -n 2 -a 384 test_champions/bill.cor \
+                -n 3 -a 768 test_champions/pdd.cor -n 4 -a 1152 test_champions/tyron.cor
+```
+
 Controls: `s` start, `Space` pause/resume, `Left`/`Right` change the delay by 10 ms, `Up`/`Down` scroll the arena, `q` quit.
 
 Unit tests use Criterion: `make unit_tests` builds `tests/unit_tests`.
@@ -63,8 +70,8 @@ Unit tests use Criterion: `make unit_tests` builds `tests/unit_tests`.
 - `test_champions/` - sample champions, as source (`.s`) and compiled (`.cor`).
 - `tests/` - Criterion unit tests.
 
-## Team
+## Team and contributions
 
 Kevin Huynh ([@Nivek-Hyn](https://github.com/Nivek-Hyn)) and Hatim Ouaadi.
 
-My part was the virtual machine: loading champions, the cycle loop, every instruction, the live checks and the ncurses view.
+- Kevin Huynh: the virtual machine (loading champions, the cycle loop, every instruction, the live checks) and the ncurses view.
