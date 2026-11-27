@@ -10,13 +10,14 @@
 void exec_lldi(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    ldi_params_t params;
-    int addr;
-    unsigned int result;
+    instr_t instr;
+    int addr = 0;
+    int reg = 0;
 
-    if (extract_ldi_params(resources, process, &params) == -1)
+    if (decode_instruction(resources, process, &instr) == -1)
         return;
-    addr = (process->pc + ((params.value + params.offset))) % MEM_SIZE;
-    result = get_parameter_value(resources, addr, 4);
-    exec_ldi_write(params.reg, result, process);
+    addr = process->pc + instr.args[0].value + instr.args[1].value;
+    reg = instr.args[2].reg;
+    process->registers[reg - 1] = read_mem(resources, addr, REG_SIZE);
+    process->carry = (process->registers[reg - 1] == 0) ? true : false;
 }

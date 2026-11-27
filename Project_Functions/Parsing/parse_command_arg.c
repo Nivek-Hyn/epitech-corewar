@@ -47,21 +47,18 @@ int check_flags(resources_t *resources, int argc, char **argv, int i)
 {
     if (my_strcmp(&argv[i][1], "dump") == 0) {
         resources->flags->dump++;
-        if (argc > i + 1 && my_strlen(argv[i + 1]) > 9
-            || argv[i + 1][0] == '-')
+        if (argc <= i + 1 || !is_number(argv[i + 1]))
             return -1;
-        if (argc > i + 1) {
-            resources->nbr_cycle = my_atoi(argv[i + 1]);
-        } else {
+        if (my_strlen(argv[i + 1]) > 9 || argv[i + 1][0] == '-')
             return -1;
-        }
+        resources->nbr_cycle = my_atoi(argv[i + 1]);
     }
     return check_flags_two(resources, argc, argv, i);
 }
 
 static int flags_errors(resources_t *resources, char **argv, int i)
 {
-    if (resources->flags->dump != 1)
+    if (resources->flags->dump > 1)
         return -1;
     if (resources->flags->a + resources->flags->n > 2)
         return -1;

@@ -24,6 +24,10 @@ void initialize_graphical(graphical_t *graphical)
     graphical->info_win = NULL;
     graphical->params_win = NULL;
     graphical->help_win = NULL;
+    graphical->rich_colors = 0;
+    graphical->owned_bytes = 0;
+    for (int i = 0; i < MEM_SIZE; i++)
+        graphical->cursor[i] = 0;
 }
 
 void initialize_ncurses(void)

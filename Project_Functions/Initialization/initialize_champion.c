@@ -15,6 +15,7 @@ int initialize_champion(champion_t *champion)
     champion->comment = NULL;
     champion->prog_size = 0;
     champion->code = NULL;
+    champion->pulse = 0;
     champion->processes = create_process(NULL);
     if (champion->processes == NULL)
         return -1;

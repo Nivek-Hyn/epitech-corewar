@@ -60,7 +60,7 @@ void advance_instruction(resources_t *resources, process_t *process)
         check_if_has_coding_byte(process->current_instruction);
     int advance = 1;
 
-    if (op.code == 9)
+    if (op.code == 9 && process->carry == true)
         return;
     if (has_coding_byte != 1) {
         advance += get_dir_size(process->current_instruction);

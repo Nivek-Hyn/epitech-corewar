@@ -24,15 +24,7 @@ void print_info_player_two(graphical_t *graphical, resources_t *resources,
 void print_info_player(graphical_t *graphical, resources_t *resources,
     int champion_index, int y)
 {
-    int color_pair = 1;
-
-    set_color(graphical,
-        resources->champion_list[champion_index]->prog_number, &color_pair);
-    wattron(graphical->info_win, COLOR_PAIR(color_pair));
-    mvwprintw(graphical->info_win, y, 1, "Champion %d (%s)",
-        resources->champion_list[champion_index]->prog_number,
-        resources->champion_list[champion_index]->name);
-    wattroff(graphical->info_win, COLOR_PAIR(color_pair));
+    print_champion_stats(graphical, resources, champion_index, y);
 }
 
 void print_info_graphical_two(graphical_t *graphical, resources_t *resources)

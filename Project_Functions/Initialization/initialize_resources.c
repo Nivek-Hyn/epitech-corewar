@@ -19,12 +19,13 @@ int initialize_resources(resources_t *resources)
     resources->flags->prog_number = -1;
     resources->flags->a = 0;
     resources->flags->load_address = -1;
-    resources->nbr_cycle = 0;
+    resources->nbr_cycle = -1;
+    resources->last_live = NULL;
     resources->total_lives = 0;
     for (int i = 0; i < MEM_SIZE; i++) {
         resources->arena[i] = 0;
         resources->owner[i] = -1;
+        resources->heat[i] = 0;
     }
-    resources->arena[MEM_SIZE] = '\0';
     return 0;
 }

@@ -22,21 +22,19 @@ void print_arena_ncurses(resources_t *resources, graphical_t *graphical)
     char dest[3];
     int start_line = graphical->offset_y;
     int end_line = start_line + 41;
-    int color_pair = 0;
-    int owner = 0;
+    int attributes = 0;
     int i = 0;
 
     for (int y = start_line; y < end_line && y < 192; y++) {
         for (int x = 0; x < 32; x++) {
             i = y * 32 + x;
             convert_char_to_hexa(resources->arena[i], dest);
-            color_pair = 1;
-            owner = resources->owner[i];
-            set_color(graphical, owner, &color_pair);
-            wattron(graphical->arena_win, COLOR_PAIR(color_pair));
+            attributes = cell_attributes(resources, graphical, i);
+            wattron(graphical->arena_win, attributes);
             mvwprintw(graphical->arena_win,
                 (y - start_line) + 1, x * 3 + 1, "%s", dest);
-            wattroff(graphical->arena_win, COLOR_PAIR(color_pair));
+            wattroff(graphical->arena_win, attributes);
         }
     }
+    print_winner_banner(resources, graphical);
 }

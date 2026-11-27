@@ -37,6 +37,7 @@ typedef struct champion_s {
     char *comment;
     int prog_size;
     char *code;
+    int pulse;
     process_t *processes;
 } champion_t;
 
@@ -46,31 +47,24 @@ typedef struct resources_s {
     flags_t *flags;
     int nbr_cycle;
     int total_lives;
+    champion_t *last_live;
     uint8_t arena[MEM_SIZE];
+    uint8_t heat[MEM_SIZE];
     int owner[MEM_SIZE];
 } resources_t;
 
-typedef struct sti_param_s {
-    unsigned int value2;
-    uint8_t type3;
-    unsigned int new_pc;
-    champion_t *champion;
-} sti_param_t;
+typedef struct arg_s {
+    uint8_t type;
+    int reg;
+    int raw;
+    int value;
+} arg_t;
 
-typedef struct ldi_params_s {
-    unsigned int value;
-    unsigned int offset;
-    unsigned int reg;
-    unsigned int pc_offset;
-} ldi_params_t;
-
-typedef struct st_params_s {
-    uint8_t type2;
-    unsigned int reg_final;
-    uint32_t value;
-    unsigned int offset;
-    unsigned int addr_final;
-} st_params_t;
+typedef struct instr_s {
+    op_t op;
+    arg_t args[MAX_ARGS_NUMBER];
+    int size;
+} instr_t;
 
 typedef struct color_code_s {
     int color;
@@ -94,6 +88,9 @@ typedef struct graphical_s {
     WINDOW *info_win;
     WINDOW *params_win;
     WINDOW *help_win;
+    int rich_colors;
+    int owned_bytes;
+    uint8_t cursor[MEM_SIZE];
 } graphical_t;
 
 #endif // STRUCT_H //

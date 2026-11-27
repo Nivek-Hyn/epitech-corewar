@@ -10,19 +10,20 @@
 void exec_fork(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    unsigned short index = (unsigned short)get_parameter_value(resources,
-        (process->pc + 1) % MEM_SIZE, 2);
-    process_t *current = champion->processes;
+    int index = read_mem(resources, process->pc + 1, IND_SIZE);
+    int parent_pc = process->pc;
+    process_t *child = NULL;
 
     champion->processes = create_process(champion->processes);
-    while (current->next)
-        current = current->next;
-    current->alive = process->alive;
-    current->carry = process->carry;
-    current->waiting_cycles = 0;
-    current->current_instruction = -1;
+    child = champion->processes;
+    while (child->next)
+        child = child->next;
+    child->alive = process->alive;
+    child->carry = process->carry;
+    child->waiting_cycles = 0;
+    child->current_instruction = -1;
     for (int i = 0; i < REG_NUMBER; i++)
-        current->registers[i] = process->registers[i];
-    current->pc = (current->pc + index % IDX_MOD) % MEM_SIZE;
-    current->forked = true;
+        child->registers[i] = process->registers[i];
+    child->pc = mem_addr(parent_pc + index % IDX_MOD);
+    child->forked = true;
 }

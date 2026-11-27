@@ -10,10 +10,8 @@
 void exec_zjmp(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    unsigned short index =
-        (unsigned short)get_parameter_value(
-            resources, (process->pc + 1) % MEM_SIZE, 2);
+    int index = read_mem(resources, process->pc + 1, IND_SIZE);
 
     if (process->carry == true)
-        process->pc = (process->pc + index % IDX_MOD) % MEM_SIZE;
+        process->pc = mem_addr(process->pc + index % IDX_MOD);
 }

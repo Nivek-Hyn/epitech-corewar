@@ -48,6 +48,7 @@ void initialize_color_code(resources_t *resources, graphical_t *graphical)
     init_dark_color();
     init_normal_color();
     init_light_color();
+    initialize_rich_colors(graphical);
     graphical->color_code = malloc(sizeof(color_code_t *) *
         (resources->nb_champion + 1));
     graphical->color_code[resources->nb_champion] = NULL;

@@ -12,10 +12,7 @@
     #define MAX_SIZE 2147483647
     #define SUCCEED 0
     #define NBR_INSTRUCTIONS 16
-    #define FORMULA_OFFSET (process->pc + 2) % MEM_SIZE, 2
-    #define FORMULA_VALUE (process->pc + (offset % IDX_MOD)) % MEM_SIZE, 4
-    #define FORMULA_SECOND (process->pc + offset) % MEM_SIZE, REG_SIZE
-    #define VALUE_GET params->pc_offset, process, resources
-    #define OFS resources->arena[(process->pc + params->pc_offset) % MEM_SIZE]
+    #define HEAT_MAX 200
+    #define PULSE_MAX 24
 
 #endif /* DEFINE_H_ */

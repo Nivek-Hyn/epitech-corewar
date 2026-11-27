@@ -13,7 +13,7 @@ unsigned int get_parameter_value(resources_t *resources, int pos, int size)
 
     for (int i = 0; i < size; i++) {
         value = (value << 8) |
-            (uint8_t)resources->arena[(pos + i) % MEM_SIZE];
+            (uint8_t)resources->arena[mem_addr(pos + i)];
     }
     return value;
 }

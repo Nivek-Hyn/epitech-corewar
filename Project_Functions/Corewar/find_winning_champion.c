@@ -34,5 +34,7 @@ champion_t *find_winning_champion(resources_t *resources)
             winner = resources->champion_list[i];
         }
     }
+    if (winner == NULL)
+        return resources->last_live;
     return winner;
 }

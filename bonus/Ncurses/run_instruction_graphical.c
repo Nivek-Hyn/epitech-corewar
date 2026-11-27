@@ -26,12 +26,10 @@ void exec_aff_bonus(resources_t *resources, champion_t *champion,
 void exec_live_bonus(resources_t *resources, champion_t *champion,
     process_t *process)
 {
-    unsigned int prog_number = (unsigned int)get_parameter_value(
-        resources, (process->pc + 1) % MEM_SIZE, 4);
+    champion_t *target = report_live(resources, process);
 
-    process->alive = 1;
-    process->live = true;
-    resources->total_lives++;
+    if (target != NULL)
+        target->pulse = PULSE_MAX;
 }
 
 void run_instruction_graphical(resources_t *resources, champion_t *champion,

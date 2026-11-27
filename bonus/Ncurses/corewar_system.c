@@ -11,6 +11,7 @@ void corewar_system(resources_t *resources, graphical_t *graphical)
 {
     graphical->cycle++;
     run_all_processes_graphical(resources);
+    update_visual_effects(resources, graphical);
     cycles_and_lives_manager(resources,
         &graphical->cycle_to_die, &graphical->cycle_checker);
     if (champions_left(resources) <= 1) {

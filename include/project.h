@@ -79,15 +79,19 @@ void exec_lfork(resources_t *resources, champion_t *champion,
     process_t *process);
 void exec_aff(resources_t *resources, champion_t *champion,
     process_t *process);
-int extract_ldi_params(resources_t *resources,
-    process_t *process, ldi_params_t *params);
-void exec_ldi_write(int reg, int value, process_t *process);
 
 // Utility:
 uint32_t convert_big_endian_to_little_endian(uint32_t Big_Endian);
 int champions_left(resources_t *resources);
 void print_arena(resources_t *resources);
 unsigned int get_parameter_value(resources_t *resources, int pos, int size);
+int mem_addr(int addr);
+int read_mem(resources_t *resources, int pos, int size);
+void write_mem(resources_t *resources, int addr, int value, int owner);
+int decode_instruction(resources_t *resources, process_t *process,
+    instr_t *instr);
+int get_dir_size(char opcode);
+champion_t *report_live(resources_t *resources, process_t *process);
 const op_t instruction_info(char opcode);
 int get_color_code(int index);
 
@@ -113,5 +117,15 @@ void set_color(graphical_t *graphical, int owner, int *color_pair);
 void print_info_graphical(graphical_t *graphical, resources_t *resources);
 void print_params_graphical(graphical_t *graphical, resources_t *resources);
 void print_help_graphical(graphical_t *graphical);
+void initialize_rich_colors(graphical_t *graphical);
+void update_visual_effects(resources_t *resources, graphical_t *graphical);
+int cell_attributes(resources_t *resources, graphical_t *graphical, int i);
+int champion_index(resources_t *resources, int prog_number);
+int count_processes(champion_t *champion);
+int count_territory(resources_t *resources, int prog_number);
+int count_owned(resources_t *resources);
+void print_winner_banner(resources_t *resources, graphical_t *graphical);
+void print_champion_stats(graphical_t *graphical, resources_t *resources,
+    int champion_index, int y);
 
 #endif
